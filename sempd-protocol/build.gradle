@@ -1,0 +1,8 @@
+dependencies {
+	compile project(':jevents')
+	compile project(':libsemp-core')
+	compile project(':libsemp')
+	compile project(':sempd-core')
+
+	compile 'com.google.inject:guice:4.0-beta5'
+}

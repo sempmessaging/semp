@@ -1,0 +1,6 @@
+dependencies {
+	compile project(':jevents')
+	compile project(':libsemp-core')
+
+	compile 'com.google.code.gson:gson:2.3'
+}

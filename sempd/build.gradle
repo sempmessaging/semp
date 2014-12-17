@@ -1,0 +1,5 @@
+dependencies {
+	compile project(':jevents')
+	compile project(':sempd-core')
+	compile project(':sempd-protocol')
+}

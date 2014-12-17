@@ -1,0 +1,4 @@
+include ':jevents', ':values', ':libsemp-core', ':libsemp', ':libsemp-itest', ':sempc', ':sempd', ':sempd-core',
+		':sempd-protocol', 'sempd-persistence-fs'
+
+rootProject.name = 'semp'
