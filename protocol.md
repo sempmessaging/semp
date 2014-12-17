@@ -102,6 +102,7 @@ With every encrypted envelope, the server and the client create a new key for th
     "NextKeyId": /* A unique identifier for this next key. The client can use this identifier as "KeyId" in the next encrypted envelope. */
     "Payload": /* The response to the nested request. */
 }
+```
 
 ## RequestLogin
 
