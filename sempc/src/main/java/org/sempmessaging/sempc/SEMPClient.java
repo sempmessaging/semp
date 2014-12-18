@@ -2,7 +2,8 @@ package org.sempmessaging.sempc;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.sempmessaging.sempc.ui.javafx.MainWindow;
+import org.sempmessaging.libsemp.arguments.Args;
+import org.sempmessaging.sempc.ui.javafx.JavaFxApplication;
 
 public class SEMPClient {
 	private final Injector injector;
@@ -11,14 +12,16 @@ public class SEMPClient {
 		injector = Guice.createInjector();
 	}
 
-	public void start() {
-		MainWindow mainWindow = injector.getInstance(MainWindow.class);
-		mainWindow.show();
+	public void start(final String[] commandLineArgs) {
+		Args.notNull(commandLineArgs, "commandLineArgs");
+
+		JavaFxApplication application = injector.getInstance(JavaFxApplication.class);
+		application.startApplication(commandLineArgs);
 	}
 
 	public static void main(String[] args) {
 		SEMPClient client = new SEMPClient();
-		client.start();
+		client.start(args);
 	}
 
 }
