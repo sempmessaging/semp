@@ -1,0 +1,5 @@
+dependencies {
+	compile project(':values')
+	compile project(':html')
+	compile project(':sempc-ui')
+}
