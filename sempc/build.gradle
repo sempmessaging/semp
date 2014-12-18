@@ -1,3 +1,4 @@
 dependencies {
 	compile project(':jevents')
+	compile project(':sempc-ui-javafx')
 }
