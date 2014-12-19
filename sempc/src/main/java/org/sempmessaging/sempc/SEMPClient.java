@@ -2,26 +2,30 @@ package org.sempmessaging.sempc;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.sempmessaging.libsemp.arguments.Args;
-import org.sempmessaging.sempc.ui.javafx.JavaFxApplication;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.sempmessaging.sempc.ui.javafx.MainView;
 
-public class SEMPClient {
+public class SEMPClient extends Application {
 	private final Injector injector;
 
 	public SEMPClient() {
 		injector = Guice.createInjector();
 	}
 
-	public void start(final String[] commandLineArgs) {
-		Args.notNull(commandLineArgs, "commandLineArgs");
+	@Override
+	public void start(final Stage primaryStage) throws Exception {
+		MainView mainView = injector.getInstance(MainView.class);
 
-		JavaFxApplication application = injector.getInstance(JavaFxApplication.class);
-		application.startApplication(commandLineArgs);
+		primaryStage.setScene(new Scene(mainView));
+		primaryStage.setTitle("SEMP Client");
+		primaryStage.show();
+
 	}
 
 	public static void main(String[] args) {
-		SEMPClient client = new SEMPClient();
-		client.start(args);
+		launch(args);
 	}
 
 }
