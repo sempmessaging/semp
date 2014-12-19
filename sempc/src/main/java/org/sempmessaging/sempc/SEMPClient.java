@@ -5,13 +5,14 @@ import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.sempmessaging.sempc.ui.javafx.JavaFxUiModule;
 import org.sempmessaging.sempc.ui.javafx.MainView;
 
 public class SEMPClient extends Application {
 	private final Injector injector;
 
 	public SEMPClient() {
-		injector = Guice.createInjector();
+		injector = Guice.createInjector(new JavaFxUiModule());
 	}
 
 	@Override
