@@ -7,8 +7,12 @@ public class TextNode implements FlowContentNode {
 	private final String text;
 
 	public TextNode(final StringValue text) {
+		this(text.value());
+	}
+
+	public TextNode(final String text) {
 		//FIXME do some sanity checks on text: It must not contain HTML code!
-		this.text = text.value();
+		this.text = text;
 	}
 
 	@Override

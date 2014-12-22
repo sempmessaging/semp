@@ -1,25 +1,22 @@
 package org.sempmessaging.sempc.ui;
 
-public class ConversationsPanel extends HtmlComponent {
-	private String content = "Conversations <img src=\"res:///img/exit13.png\">";
+import net.davidtanzer.html.TextNode;
+import net.davidtanzer.html.elements.Div;
+import net.davidtanzer.html.elements.Html;
+import net.davidtanzer.html.elements.values.CssLink;
+
+public class ConversationsPanel {
+	private final Html rootNode = new Html();
 
 	public ConversationsPanel() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					sleep(3000);
-					content+="! <strong>Conversations!</strong>";
-					componentChanged();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}.start();
+		Div rootDiv = new Div();
+		rootDiv.add(new TextNode("Hello World!"));
+
+		rootNode.body().add(rootDiv);
+		rootNode.head().addCssLink(new CssLink("res:///style/style.css"));
 	}
 
-	@Override
-	public String getInnerHtml() {
-		return content;
+	public Html getHtml() {
+		return rootNode;
 	}
 }

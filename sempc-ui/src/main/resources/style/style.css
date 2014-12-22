@@ -1,0 +1,28 @@
+@font-face {
+	font-family: 'clearsans';
+	src: url('res:///style/font/ClearSans-Regular.woff');
+}
+
+@font-face {
+	font-family: 'clearsans';
+	src: url('res:///style/font/ClearSans-Bold.woff');
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: 'clearsans';
+	src: url('res:///style/font/ClearSans-BoldItalic.woff');
+	font-style: italic;
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: 'clearsans';
+	src: url('res:///style/font/ClearSans-Italic.woff');
+	font-style: italic;
+}
+
+body {
+	font-family: 'clearsans';
+	font-size: 12pt;
+}

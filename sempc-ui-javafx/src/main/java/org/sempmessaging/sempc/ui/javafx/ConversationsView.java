@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import javafx.scene.Node;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import net.davidtanzer.html.elements.Html;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.ui.ConversationsPanel;
 
@@ -21,7 +22,8 @@ public class ConversationsView {
 		this.conversationsPanel = conversationsPanel;
 		componentChangedListener.notifyOnChanges(this);
 
-		webView.getEngine().loadContent(conversationsPanel.getHtml());
+		Html html = conversationsPanel.getHtml();
+		webView.getEngine().loadContent(html.render());
 	}
 
 	Node view() {
