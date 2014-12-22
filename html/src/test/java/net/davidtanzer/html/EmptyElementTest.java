@@ -6,12 +6,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ElementTest {
-	private Element element;
+public class EmptyElementTest {
+	private EmptyElement element;
 
 	@Before
 	public void setup() {
-		element = new Element(TagName.of("testElement")) {
+		element = new EmptyElement(TagName.of("testElement")) {
 		};
 	}
 
@@ -19,7 +19,7 @@ public class ElementTest {
 	public void rendersEmptyElementWithCloseTagWhenNoContentOrAttributesWereAdded() {
 		String rendered = element.render();
 
-		assertEquals("<testElement></testElement>", rendered);
+		assertEquals("<testElement>", rendered);
 	}
 
 	@Test
@@ -31,15 +31,5 @@ public class ElementTest {
 
 		assertTrue(rendered.contains(" attr1=\"value1\""));
 		assertTrue(rendered.contains(" attr2=\"value2\""));
-	}
-
-	@Test
-	public void rendersElementWithSubNodesWhenNodesWereAdded() {
-		element.add(new Element(TagName.of("innerElement")) {
-		});
-
-		String rendered = element.render();
-
-		assertEquals("<testElement><innerElement></innerElement></testElement>", rendered);
 	}
 }
