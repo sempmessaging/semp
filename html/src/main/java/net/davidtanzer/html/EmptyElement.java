@@ -1,5 +1,9 @@
 package net.davidtanzer.html;
 
+import net.davidtanzer.html.values.AttributeName;
+import net.davidtanzer.html.values.AttributeValue;
+import net.davidtanzer.html.values.TagName;
+
 public abstract class EmptyElement implements Node {
 	private final TagName tagName;
 	private Attributes attributes = new Attributes();

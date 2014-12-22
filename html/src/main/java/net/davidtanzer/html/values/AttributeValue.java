@@ -1,4 +1,4 @@
-package net.davidtanzer.html;
+package net.davidtanzer.html.values;
 
 import net.davidtanzer.value.StringValue;
 
@@ -7,7 +7,7 @@ public class AttributeValue extends StringValue {
 		super(value);
 	}
 
-	private AttributeValue() {
+	protected AttributeValue() {
 		super();
 	}
 }

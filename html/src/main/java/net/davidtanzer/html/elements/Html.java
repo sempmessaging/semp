@@ -1,7 +1,7 @@
 package net.davidtanzer.html.elements;
 
 import net.davidtanzer.html.Element;
-import net.davidtanzer.html.TagName;
+import net.davidtanzer.html.values.TagName;
 
 public class Html extends Element {
 	private final Head head;

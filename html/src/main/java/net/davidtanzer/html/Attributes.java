@@ -1,5 +1,8 @@
 package net.davidtanzer.html;
 
+import net.davidtanzer.html.values.AttributeName;
+import net.davidtanzer.html.values.AttributeValue;
+
 import java.util.HashMap;
 import java.util.Map;
 

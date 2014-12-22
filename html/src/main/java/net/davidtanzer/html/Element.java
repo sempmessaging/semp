@@ -1,5 +1,7 @@
 package net.davidtanzer.html;
 
+import net.davidtanzer.html.values.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public abstract class Element implements Node {
 		children.add(node);
 	}
 
-	public void setAttribute(final AttributeName attributeName, final AttributeValue attributeValue) {
+	protected void setAttribute(final AttributeName attributeName, final AttributeValue attributeValue) {
 		attributes.add(attributeName, attributeValue);
 	}
 
@@ -32,6 +34,14 @@ public abstract class Element implements Node {
 		renderedResultBuilder.append("</");
 		renderedResultBuilder.append(tagName.value());
 		renderedResultBuilder.append(">");
+	}
+
+	public void id(final Id id) {
+		setAttribute(AttributeName.of("id"), id);
+	}
+
+	public void cssClass(final CssClass cssClass) {
+		setAttribute(AttributeName.of("class"), cssClass);
 	}
 
 	private void renderChildren(final StringBuilder renderedResultBuilder) {

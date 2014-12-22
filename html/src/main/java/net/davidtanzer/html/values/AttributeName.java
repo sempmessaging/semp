@@ -1,4 +1,4 @@
-package net.davidtanzer.html;
+package net.davidtanzer.html.values;
 
 import net.davidtanzer.value.StringValue;
 

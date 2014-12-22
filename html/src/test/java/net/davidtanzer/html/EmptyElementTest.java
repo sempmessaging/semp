@@ -1,5 +1,8 @@
 package net.davidtanzer.html;
 
+import net.davidtanzer.html.values.AttributeName;
+import net.davidtanzer.html.values.AttributeValue;
+import net.davidtanzer.html.values.TagName;
 import org.junit.Before;
 import org.junit.Test;
 
