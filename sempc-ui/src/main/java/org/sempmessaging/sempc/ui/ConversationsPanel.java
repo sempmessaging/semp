@@ -1,7 +1,7 @@
 package org.sempmessaging.sempc.ui;
 
 public class ConversationsPanel extends HtmlComponent {
-	private String content = "Conversations";
+	private String content = "Conversations <img src=\"res:///img/exit13.png\">";
 
 	public ConversationsPanel() {
 		new Thread() {
