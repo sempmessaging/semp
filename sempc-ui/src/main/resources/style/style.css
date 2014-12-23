@@ -51,3 +51,15 @@ body {
 	float: left;
 	height: 100%;
 }
+
+.connection-status-panel {
+	padding: 2px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.connection-status-panel .connection-status-icon {
+	width: 24px;
+	height: 24px;
+}
