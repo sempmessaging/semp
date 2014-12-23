@@ -3,45 +3,27 @@ package net.davidtanzer.html;
 import net.davidtanzer.html.values.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public abstract class Element implements Node {
-	private final TagName tagName;
+public abstract class Element extends BaseElement implements Node {
 	private final List<Node> children = new ArrayList<>();
-	private Attributes attributes = new Attributes();
 
 	protected Element(final TagName tagName) {
-		this.tagName = tagName;
+		super(tagName);
 	}
 
-	protected void add(final Node node) {
-		children.add(node);
-	}
-
-	protected void setAttribute(final AttributeName attributeName, final AttributeValue attributeValue) {
-		attributes.add(attributeName, attributeValue);
+	protected void add(final Node... nodes) {
+		for(Node node : nodes) {
+			children.add(node);
+		}
 	}
 
 	@Override
 	public void render(final StringBuilder renderedResultBuilder) {
-		renderedResultBuilder.append("<");
-		renderedResultBuilder.append(tagName.value());
-		attributes.render(renderedResultBuilder);
-		renderedResultBuilder.append(">");
-
+		renderOpenTag(renderedResultBuilder);
 		renderChildren(renderedResultBuilder);
-
-		renderedResultBuilder.append("</");
-		renderedResultBuilder.append(tagName.value());
-		renderedResultBuilder.append(">");
-	}
-
-	public void id(final Id id) {
-		setAttribute(AttributeName.of("id"), id);
-	}
-
-	public void cssClass(final CssClass cssClass) {
-		setAttribute(AttributeName.of("class"), cssClass);
+		renderCloseTag(renderedResultBuilder);
 	}
 
 	private void renderChildren(final StringBuilder renderedResultBuilder) {
@@ -49,5 +31,4 @@ public abstract class Element implements Node {
 			child.render(renderedResultBuilder);
 		}
 	}
-
 }

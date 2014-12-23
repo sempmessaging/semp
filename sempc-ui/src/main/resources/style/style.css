@@ -22,7 +22,32 @@
 	font-style: italic;
 }
 
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 body {
 	font-family: 'clearsans';
 	font-size: 12pt;
+	margin: 0;
+	padding: 0;
+}
+
+.horizontal-split .first {
+	float: left;
+	height: 100%;
+}
+
+.horizontal-split .divider {
+	float: left;
+	width: 6px;
+	height: 100%;
+	margin-left: -4px;
+	border-right: 2px solid #777;
+}
+
+.horizontal-split .second {
+	float: left;
+	height: 100%;
 }

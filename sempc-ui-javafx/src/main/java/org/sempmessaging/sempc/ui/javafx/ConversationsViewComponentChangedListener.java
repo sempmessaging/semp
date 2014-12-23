@@ -2,6 +2,7 @@ package org.sempmessaging.sempc.ui.javafx;
 
 import com.google.inject.Singleton;
 import javafx.application.Platform;
+import net.davidtanzer.html.Node;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.ui.ComponentChangedListener;
 
@@ -10,10 +11,26 @@ public class ConversationsViewComponentChangedListener implements ComponentChang
 	private ConversationsView conversationsView;
 
 	@Override
-	public void htmlComponentChanged(final String id, String newContent) {
+	public void htmlComponentChanged(final String id, Node[] newContent) {
+		Args.notEmpty(id, "id");
+		Args.notNull(newContent, "newContent");
+
 		assert conversationsView != null : "conversationsView must be set by dependency injection or test setup.";
-		Platform.runLater(() ->
-			conversationsView.engine().executeScript("document.getElementById(\"" + id + "\").innerHTML=\"" + escapeStrings(newContent) + "\";"));
+
+		String contentString = render(newContent);
+		String escapedContentString = escapeStrings(contentString);
+
+		Platform.runLater(() -> conversationsView.engine().executeScript("document.getElementById(\"" + id + "\").innerHTML=\"" + escapedContentString + "\";"));
+	}
+
+	private String render(final Node[] nodes) {
+		StringBuilder renderedResultBuilder = new StringBuilder();
+
+		for(Node node : nodes) {
+			node.render(renderedResultBuilder);
+		}
+
+		return renderedResultBuilder.toString();
 	}
 
 	private String escapeStrings(final String newContent) {

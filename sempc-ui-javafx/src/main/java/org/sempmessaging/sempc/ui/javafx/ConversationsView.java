@@ -12,14 +12,12 @@ import org.sempmessaging.sempc.ui.ConversationsPanel;
 @Singleton
 public class ConversationsView {
 	private final WebView webView = new WebView();
-	private ConversationsPanel conversationsPanel;
 
 	@Inject
 	public ConversationsView(final ConversationsPanel conversationsPanel, final ConversationsViewComponentChangedListener componentChangedListener) {
 		Args.notNull(conversationsPanel, "conversationsPanel");
 		Args.notNull(componentChangedListener, "componentChangedListener");
 
-		this.conversationsPanel = conversationsPanel;
 		componentChangedListener.notifyOnChanges(this);
 
 		Html html = conversationsPanel.getHtml();

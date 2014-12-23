@@ -8,7 +8,7 @@ public class Div extends Element implements FlowContentNode {
 		super(TagName.of("div"));
 	}
 
-	public void add(final FlowContentNode node) {
-		super.add(node);
+	public void add(final FlowContentNode... nodes) {
+		super.add(nodes);
 	}
 }
