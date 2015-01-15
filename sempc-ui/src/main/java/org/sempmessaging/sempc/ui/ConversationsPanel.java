@@ -3,6 +3,7 @@ package org.sempmessaging.sempc.ui;
 import com.google.inject.Inject;
 import net.davidtanzer.html.elements.Html;
 import net.davidtanzer.html.elements.values.CssLink;
+import org.sempmessaging.sempc.ui.connection.ConnectionStatusPanel;
 
 public class ConversationsPanel {
 	private final Html rootNode;

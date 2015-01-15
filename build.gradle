@@ -21,3 +21,11 @@ subprojects {
 		testCompile 'org.mockito:mockito-all:1.9.5'
 	}
 }
+
+dependencies {
+	testCompile project(':sempc')
+	testCompile project(':sempd')
+	testCompile project(':libsemp')
+	testCompile project(':libsemp-itest')
+	testCompile 'junit:junit:4.11'
+}
