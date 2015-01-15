@@ -63,3 +63,20 @@ body {
 	width: 24px;
 	height: 24px;
 }
+
+.connection-status-details {
+	position: absolute;
+	bottom: 36px;
+	left: 12px;
+
+	width: 250px;
+	overflow-x: auto;
+
+	border: 2px solid #777;
+	padding: 0.5em 1em;
+}
+
+.connection-status-details .connection-status-icon {
+	width: 16px;
+	height: 16px;
+}

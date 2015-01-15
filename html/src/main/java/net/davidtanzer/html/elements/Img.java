@@ -8,6 +8,10 @@ import net.davidtanzer.html.values.TagName;
 public class Img extends EmptyElement implements FlowContentNode {
 	public Img(final ImageSrc imageSrc) {
 		super(TagName.of("img"));
+		src(imageSrc);
+	}
+
+	public void src(final ImageSrc imageSrc) {
 		setAttribute(AttributeName.of("src"), imageSrc);
 	}
 }

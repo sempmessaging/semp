@@ -10,6 +10,7 @@ public abstract class BaseElement {
 	private final TagName tagName;
 	private List<CssClass> cssClasses = new ArrayList<>();
 	private Attributes attributes = new Attributes();
+	private Events events = new Events();
 
 	protected BaseElement(final TagName tagName) {
 		this.tagName = tagName;
@@ -36,8 +37,8 @@ public abstract class BaseElement {
 	private CssClass toCssClassString(final List<CssClass> cssClasses) {
 		StringBuilder resultBuilder = new StringBuilder();
 
-		for(CssClass c : cssClasses) {
-			if(resultBuilder.length() > 0) {
+		for (CssClass c : cssClasses) {
+			if (resultBuilder.length() > 0) {
 				resultBuilder.append(" ");
 			}
 			resultBuilder.append(c.value());
@@ -48,6 +49,10 @@ public abstract class BaseElement {
 
 	public void style(final CssStyle style) {
 		setAttribute(AttributeName.of("style"), style);
+	}
+
+	public Events events() {
+		return events;
 	}
 
 	protected void renderOpenTag(final StringBuilder renderedResultBuilder) {
@@ -61,5 +66,15 @@ public abstract class BaseElement {
 		renderedResultBuilder.append("</");
 		renderedResultBuilder.append(tagName.value());
 		renderedResultBuilder.append(">");
+	}
+
+	public class Events {
+		public void onMouseOver(final EventHandlerScript eventHandler) {
+			setAttribute(AttributeName.of("onmouseover"), eventHandler);
+		}
+
+		public void onMouseOut(final EventHandlerScript eventHandler) {
+			setAttribute(AttributeName.of("onmouseout"), eventHandler);
+		}
 	}
 }

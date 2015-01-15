@@ -19,6 +19,10 @@ public abstract class Element extends BaseElement implements Node {
 		}
 	}
 
+	protected void removeAllChildren() {
+		children.clear();
+	}
+
 	@Override
 	public void render(final StringBuilder renderedResultBuilder) {
 		renderOpenTag(renderedResultBuilder);

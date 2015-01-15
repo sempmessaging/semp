@@ -4,8 +4,11 @@ import com.google.inject.Inject;
 import net.davidtanzer.html.elements.Div;
 import net.davidtanzer.html.elements.FlowContentNode;
 import net.davidtanzer.html.values.CssClass;
+import net.davidtanzer.html.values.EventHandlerScript;
 import net.davidtanzer.html.values.Id;
 import org.sempmessaging.libsemp.arguments.Args;
+import org.sempmessaging.sempc.ui.event.EventHandler;
+import org.sempmessaging.sempc.ui.event.EventHandlerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,7 @@ public abstract class HtmlComponent {
 
 	private ComponentChangedListener componentChangedListener;
 	private List<CssClass> cssClasses = new ArrayList<>();
+	private EventHandlerProvider eventHandlerProvider;
 
 	private static synchronized String nextId() {
 		int componentId = nextComponentId;
@@ -24,6 +28,8 @@ public abstract class HtmlComponent {
 	}
 
 	public FlowContentNode getHtml() {
+		initializeComponent();
+
 		Div container = new Div();
 		container.id(new Id(id));
 		if(!cssClasses.isEmpty()) {
@@ -32,6 +38,9 @@ public abstract class HtmlComponent {
 		container.add(getInnerHtml());
 
 		return container;
+	}
+
+	protected void initializeComponent() {
 	}
 
 	protected abstract FlowContentNode[] getInnerHtml();
@@ -54,5 +63,17 @@ public abstract class HtmlComponent {
 		Args.setOnce(this.componentChangedListener, "componentChangedListener");
 
 		this.componentChangedListener = componentChangedListener;
+	}
+
+	@Inject
+	public void setEventHandlerProvider(final EventHandlerProvider eventHandlerProvider) {
+		Args.notNull(eventHandlerProvider, "eventHandlerProvider");
+		Args.setOnce(this.eventHandlerProvider, "eventHandlerProvider");
+
+		this.eventHandlerProvider = eventHandlerProvider;
+	}
+
+	protected EventHandlerScript eventHandler(final EventHandler eventHandler) {
+		return eventHandlerProvider.provideEventHandler(eventHandler);
 	}
 }

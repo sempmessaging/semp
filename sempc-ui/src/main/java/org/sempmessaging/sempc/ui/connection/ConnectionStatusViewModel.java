@@ -12,16 +12,23 @@ import java.util.List;
 
 public abstract class ConnectionStatusViewModel extends AbstractViewModel {
 	public Property<ConnectionStatus> overallConnectionStatus = newProperty(ConnectionStatus.class);
+	public Property<List<AccountStatus>> accountStatuses = newListProperty(AccountStatus.class);
 
 	@Inject
 	public void setAccounts(final Accounts accounts) {
 		Args.notNull(accounts, "accounts");
-		accounts.subscribe(accounts.accountStatusChangedEvent(), this::updateConnectionStatuses);
+		accounts.subscribe(accounts.accountStatusChangedEvent(), this::updateAccountStatuses);
 
 		overallConnectionStatus.set(ConnectionStatus.UNKNOWN);
 	}
 
-	private void updateConnectionStatuses(final List<AccountStatus> accountStatuses) {
+	private void updateAccountStatuses(final List<AccountStatus> accountStatuses) {
+		this.accountStatuses.set(accountStatuses);
+
+		computeOverallConnectionStatus(accountStatuses);
+	}
+
+	private void computeOverallConnectionStatus(final List<AccountStatus> accountStatuses) {
 		ConnectionStatus overallStatus = ConnectionStatus.CONNECTED;
 
 		for(AccountStatus accountStatus : accountStatuses) {
@@ -37,6 +44,4 @@ public abstract class ConnectionStatusViewModel extends AbstractViewModel {
 
 		overallConnectionStatus.set(overallStatus);
 	}
-
-
 }

@@ -11,4 +11,8 @@ public class Div extends Element implements FlowContentNode {
 	public void add(final FlowContentNode... nodes) {
 		super.add(nodes);
 	}
+
+	public void removeAllChildren() {
+		super.removeAllChildren();
+	}
 }
