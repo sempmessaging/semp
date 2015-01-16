@@ -8,16 +8,13 @@ import org.junit.Test;
 import org.sempmessaging.libsemp.io.MessageParser;
 import org.sempmessaging.libsemp.io.NewDataEvent;
 import org.sempmessaging.libsemp.io.NewMessageDataEvent;
-import org.sempmessaging.libsemp.io.NioJSONSender;
 import org.sempmessaging.libsemp.request.JSONSender;
 import org.sempmessaging.libsemp.request.Request;
 import org.sempmessaging.libsemp.roundrobin.RoundRobin;
 
 import java.net.InetSocketAddress;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.channels.WritableByteChannel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

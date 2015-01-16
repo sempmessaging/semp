@@ -6,13 +6,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.stubbing.Answer;
-import org.sempmessaging.libsemp.connection.ConnectionListener;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

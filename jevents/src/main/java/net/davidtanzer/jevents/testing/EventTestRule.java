@@ -2,6 +2,7 @@ package net.davidtanzer.jevents.testing;
 
 import junit.framework.AssertionFailedError;
 import net.davidtanzer.jevents.EventComponent;
+import org.junit.Assert;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -59,7 +60,7 @@ public class EventTestRule implements TestRule {
 
 	private void after() {
 		for(EventInvocationHandler handler : mandatoryInvocationHandlers) {
-			assertTrue("Handler for \""+handler.eventName()+"\" must be handled", handler.isHandled());
+			Assert.assertTrue("Handler for \"" + handler.eventName() + "\" must be handled", handler.isHandled());
 		}
 	}
 
