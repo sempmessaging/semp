@@ -1,3 +1,5 @@
+apply plugin: 'java'
+
 dependencies {
 	compile project(':semp:jevents')
 	compile project(':semp:html')

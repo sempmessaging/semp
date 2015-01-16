@@ -1,11 +1,6 @@
 package net.davidtanzer.html;
 
 public interface Node {
-	default String render() {
-		StringBuilder renderedResultBuilder = new StringBuilder();
-		render(renderedResultBuilder);
-		return renderedResultBuilder.toString();
-	}
-
+	String render();
 	void render(StringBuilder renderedResultBuilder);
 }

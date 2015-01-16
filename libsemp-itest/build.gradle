@@ -1,3 +1,5 @@
+apply plugin: 'java'
+
 dependencies {
 	compile project(':semp:libsemp')
 	compile project(':semp:sempd')

@@ -16,6 +16,13 @@ public class TextNode implements FlowContentNode {
 	}
 
 	@Override
+	public String render() {
+		StringBuilder renderedResultBuilder = new StringBuilder();
+		render(renderedResultBuilder);
+		return renderedResultBuilder.toString();
+	}
+
+	@Override
 	public void render(final StringBuilder renderedResultBuilder) {
 		renderedResultBuilder.append(text);
 	}
