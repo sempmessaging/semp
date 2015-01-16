@@ -1,4 +1,4 @@
 dependencies {
-	compile project(':jevents')
-	compile project(':values')
+	compile project(':semp:jevents')
+	compile project(':semp:values')
 }

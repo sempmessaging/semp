@@ -1,7 +1,7 @@
 dependencies {
-	compile project(':jevents')
-	compile project(':values')
-	compile project(':libsemp')
-	compile project(':libsemp-core')
-	compile project(':sempc-core')
+	compile project(':semp:jevents')
+	compile project(':semp:values')
+	compile project(':semp:libsemp')
+	compile project(':semp:libsemp-core')
+	compile project(':semp:sempc-core')
 }

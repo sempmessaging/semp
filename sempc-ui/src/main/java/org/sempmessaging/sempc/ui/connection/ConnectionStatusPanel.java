@@ -84,12 +84,12 @@ public class ConnectionStatusPanel extends HtmlComponent {
 		}
 	}
 
-	private void showConnectionDetails() {
+	public void showConnectionDetails() {
 		connectionDetails.style(new CssStyle("display: block;"));
 		componentChanged();
 	}
 
-	private void hideConnectionDetails() {
+	public void hideConnectionDetails() {
 		connectionDetails.style(new CssStyle("display: none;"));
 		componentChanged();
 	}

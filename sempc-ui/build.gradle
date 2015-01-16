@@ -1,6 +1,6 @@
 dependencies {
-	compile project(':jevents')
-	compile project(':html')
-	compile project(':values')
-	compile project(':sempc-core')
+	compile project(':semp:jevents')
+	compile project(':semp:html')
+	compile project(':semp:values')
+	compile project(':semp:sempc-core')
 }

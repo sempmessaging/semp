@@ -1,4 +1,4 @@
 dependencies {
-	compile project(':libsemp')
-	compile project(':sempd')
+	compile project(':semp:libsemp')
+	compile project(':semp:sempd')
 }

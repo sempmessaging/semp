@@ -1,8 +1,8 @@
 dependencies {
-	compile project(':jevents')
-	compile project(':values')
-	compile project(':libsemp-core')
-	compile project(':sempd-core')
+	compile project(':semp:jevents')
+	compile project(':semp:values')
+	compile project(':semp:libsemp-core')
+	compile project(':semp:sempd-core')
 
 	compile 'com.google.code.gson:gson:2.3'
 }

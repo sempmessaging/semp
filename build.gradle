@@ -23,9 +23,9 @@ subprojects {
 }
 
 dependencies {
-	testCompile project(':sempc')
-	testCompile project(':sempd')
-	testCompile project(':libsemp')
-	testCompile project(':libsemp-itest')
+	testCompile project(':semp:sempc')
+	testCompile project(':semp:sempd')
+	testCompile project(':semp:libsemp')
+	testCompile project(':semp:libsemp-itest')
 	testCompile 'junit:junit:4.11'
 }

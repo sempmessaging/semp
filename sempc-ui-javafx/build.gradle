@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':values')
-	compile project(':html')
-	compile project(':sempc-ui')
+	compile project(':semp:values')
+	compile project(':semp:html')
+	compile project(':semp:sempc-ui')
 }
