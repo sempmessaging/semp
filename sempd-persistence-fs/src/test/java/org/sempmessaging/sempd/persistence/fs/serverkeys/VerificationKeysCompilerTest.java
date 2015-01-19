@@ -2,7 +2,7 @@ package org.sempmessaging.sempd.persistence.fs.serverkeys;
 
 import com.google.inject.Provider;
 import net.davidtanzer.jevents.EventComponents;
-import net.davidtanzer.jevents.testing.EventTestRule;
+import testing.EventTestRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

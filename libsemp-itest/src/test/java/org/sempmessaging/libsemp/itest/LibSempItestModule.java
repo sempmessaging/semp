@@ -1,5 +1,9 @@
 package org.sempmessaging.libsemp.itest;
 
+import com.google.inject.Scopes;
+import net.davidtanzer.jevents.ComponentCodeGenerator;
+import net.davidtanzer.jevents.EventComponents;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.guice.EventComponentModule;
 import org.sempmessaging.sempd.core.serverkeys.ServerPublicVerificationKeysService;
 
@@ -14,6 +18,13 @@ public class LibSempItestModule extends EventComponentModule {
 
 	@Override
 	protected void configure() {
+		bind(ComponentCodeGenerator.class).to(JavassistComponentCodeGenerator.class);
+		try {
+			bind(EventComponents.class).toConstructor(EventComponents.class.getConstructor(ComponentCodeGenerator.class)).in(Scopes.SINGLETON);
+		} catch (NoSuchMethodException e) {
+			throw new IllegalStateException("Could not bind "+EventComponents.class, e);
+		}
+
 		bind(ServerPublicVerificationKeysService.class).toInstance(serverPublicVerificationKeysService);
 	}
 

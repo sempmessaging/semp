@@ -1,6 +1,7 @@
 package org.sempmessaging.libsemp.connection;
 
 import net.davidtanzer.jevents.EventComponents;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.testing.EventTestRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,8 +14,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -28,7 +27,7 @@ public class ConnectionListenerTest {
 
 	@Before
 	public void setup() {
-		listener = EventComponents.createComponent(ConnectionListener.class);
+		listener = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(ConnectionListener.class);
 
 		channel = mock(ReadableByteChannel.class);
 		listener.listenTo(new ReadableConnection() {

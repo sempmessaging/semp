@@ -1,6 +1,7 @@
 package org.sempmessaging.sempd.protocol.requests.handler;
 
 import net.davidtanzer.jevents.EventComponents;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.testing.EventTestRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,7 +30,7 @@ public class RequestHandlerRunnerTest {
 	@Before
 	public void setup() {
 		asyncExecutor = mock(AsyncExecutor.class);
-		requestHandlerRunner = EventComponents.createComponent(RequestHandlerRunner.class);
+		requestHandlerRunner = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(RequestHandlerRunner.class);
 		requestHandlerRunner.setAsyncExecutor(asyncExecutor);
 		requestHandlerRunner.setRequestHandler(new TestRequestHandler());
 	}

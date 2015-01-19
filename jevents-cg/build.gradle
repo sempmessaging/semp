@@ -1,0 +1,6 @@
+apply plugin: 'java'
+
+dependencies {
+	compile project(':semp:jevents')
+	compile 'javassist:javassist:3.12.1.GA'
+}

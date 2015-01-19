@@ -1,7 +1,5 @@
 apply plugin: 'java'
 
 dependencies {
-	compile 'javassist:javassist:3.12.1.GA'
 	compile 'com.google.inject:guice:4.0-beta5'
-	compile 'junit:junit:4.11'
 }

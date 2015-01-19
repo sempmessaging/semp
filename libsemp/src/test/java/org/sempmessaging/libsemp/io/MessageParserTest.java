@@ -1,6 +1,7 @@
 package org.sempmessaging.libsemp.io;
 
 import net.davidtanzer.jevents.EventComponents;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.testing.EventTestRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,7 +26,7 @@ public class MessageParserTest {
 
 	@Before
 	public void setup() {
-		messageParser = EventComponents.createComponent(MessageParser.class);
+		messageParser = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(MessageParser.class);
 
 		messageParserCache = mock(MessageParserCache.class);
 		messageParser.setMessageParserCache(messageParserCache);

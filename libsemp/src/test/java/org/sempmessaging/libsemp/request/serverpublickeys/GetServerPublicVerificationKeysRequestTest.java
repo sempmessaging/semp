@@ -2,6 +2,7 @@ package org.sempmessaging.libsemp.request.serverpublickeys;
 
 import com.google.inject.Provider;
 import net.davidtanzer.jevents.EventComponents;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.testing.EventTestRule;
 import net.davidtanzer.value.SingleValue;
 import org.junit.Before;
@@ -35,7 +36,7 @@ public class GetServerPublicVerificationKeysRequestTest {
 
 	@Before
 	public void setup() {
-		request = EventComponents.createComponent(GetServerPublicVerificationKeysRequest.class);
+		request = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(GetServerPublicVerificationKeysRequest.class);
 
 		Provider<JsonMapToPublicVerificationKeyTranslator> keyTranslatorProvider = mock(Provider.class);
 		when(keyTranslatorProvider.get()).thenAnswer((invocation) -> new JsonMapToPublicVerificationKeyTranslator(new JsonMapTranslator()));

@@ -18,7 +18,7 @@ public class SEMPClient extends Application {
 	private final Injector injector;
 
 	public SEMPClient() {
-		injector = Guice.createInjector(new JavaFxUiModule(), new SempcCoreModule(), new SempcUiModule());
+		injector = Guice.createInjector(new JavaFxUiModule(), new SempcCoreModule(), new SempcUiModule(), new SempClientModule());
 	}
 
 	@Override

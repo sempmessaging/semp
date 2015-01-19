@@ -1,10 +1,12 @@
 apply plugin: 'java'
 
 dependencies {
-	compile project(':semp:jevents')
+	compile project(':semp:jevents-cg')
 	compile project(':semp:libsemp-core')
 	compile project(':semp:libsemp')
 	compile project(':semp:sempd-core')
 
 	compile 'com.google.inject:guice:4.0-beta5'
+
+	testCompile project(':semp:jevents-testing')
 }

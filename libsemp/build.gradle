@@ -1,8 +1,10 @@
 apply plugin: 'java'
 
 dependencies {
-	compile project(':semp:jevents')
+	compile project(':semp:jevents-cg')
 	compile project(':semp:libsemp-core')
 
 	compile 'com.google.code.gson:gson:2.3'
+
+	testCompile project(':semp:jevents-testing')
 }

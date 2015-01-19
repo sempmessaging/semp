@@ -2,6 +2,7 @@ package org.sempmessaging.sempd.protocol.io;
 
 import com.google.inject.Provider;
 import net.davidtanzer.jevents.EventComponents;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.sempmessaging.libsemp.connection.ConnectionListener;
@@ -35,7 +36,7 @@ public class ClientConnectionsTest {
 		messageParserProvider = mock(Provider.class);
 		clientConnections = new ClientConnections(roundRobin, connectionListenerProvider, responseWriterProvider, messageParserProvider, requestHandlersProvider);
 
-		clientConnectionListener = spy(EventComponents.createComponent(TestClientConnectionListener.class));
+		clientConnectionListener = spy(new EventComponents(new JavassistComponentCodeGenerator()).createComponent(TestClientConnectionListener.class));
 		when(connectionListenerProvider.get()).thenReturn(clientConnectionListener);
 
 		MessageParser messageParser = mock(MessageParser.class);

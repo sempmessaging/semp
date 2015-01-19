@@ -1,5 +1,6 @@
 package net.davidtanzer.jevents;
 
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class EventComponentTest {
 
 	@Before
 	public void setup() {
-		component = EventComponents.createComponent(EventComponentUnderTest.class);
+		component = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(EventComponentUnderTest.class);
 	}
 
 	@Test

@@ -46,7 +46,7 @@ public class GetServerPublicVerificationKeysTest {
 		server = new SEMPServer(serverConfiguration, Guice.createInjector(new LibSempModule(), new SempdProtocolModule(), itestModule));
 		server.start();
 
-		injector = Guice.createInjector(new LibSempModule());
+		injector = Guice.createInjector(new LibSempModule(), itestModule);
 		roundRobinThread = injector.getInstance(RoundRobinThread.class);
 		roundRobinThread.start();
 

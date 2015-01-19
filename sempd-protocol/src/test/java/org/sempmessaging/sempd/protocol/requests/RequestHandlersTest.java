@@ -1,6 +1,7 @@
 package org.sempmessaging.sempd.protocol.requests;
 
 import net.davidtanzer.jevents.EventComponents;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.testing.EventTestRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,6 +21,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public class RequestHandlersTest {
+	private final EventComponents eventComponents = new EventComponents(new JavassistComponentCodeGenerator());
 	@Rule
 	public EventTestRule eventTestRule = new EventTestRule();
 
@@ -28,7 +30,7 @@ public class RequestHandlersTest {
 
 	@Before
 	public void setup() {
-		requestHandlers = EventComponents.createComponent(RequestHandlers.class);
+		requestHandlers = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(RequestHandlers.class);
 		requestRouter = mock(RequestRouter.class);
 		requestHandlers.setRequestRouter(requestRouter);
 	}
@@ -94,7 +96,7 @@ public class RequestHandlersTest {
 
 	@Test
 	public void sendsResponseAvailableEventWhenRequestIsHandled() {
-		TestRequestHandlerRunner handler = EventComponents.createComponent(TestRequestHandlerRunner.class);
+		TestRequestHandlerRunner handler = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(TestRequestHandlerRunner.class);
 		handler.setAsyncExecutor(mock(AsyncExecutor.class));
 		Map<String,Object> jsonData = new HashMap<String,Object>() {{
 			put("RequestId", "id");
@@ -112,7 +114,7 @@ public class RequestHandlersTest {
 	@Test
 	public void doesNotFindHandlerAnymoreWhenRequestIsFinished() {
 		RequestId id = RequestId.newRandomRequestId();
-		TestRequestHandlerRunner handler = EventComponents.createComponent(TestRequestHandlerRunner.class);
+		TestRequestHandlerRunner handler = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(TestRequestHandlerRunner.class);
 		handler.setAsyncExecutor(mock(AsyncExecutor.class));
 		Map<String,Object> jsonData = new HashMap<String,Object>() {{
 			put("RequestId", id.value());
@@ -130,7 +132,7 @@ public class RequestHandlersTest {
 
 	@Test
 	public void setsCorrectRequestIdBeforeHandingTheResponseDataToTheResponseWriter() {
-		TestRequestHandlerRunner handler = EventComponents.createComponent(TestRequestHandlerRunner.class);
+		TestRequestHandlerRunner handler = eventComponents.createComponent(TestRequestHandlerRunner.class);
 		handler.setAsyncExecutor(mock(AsyncExecutor.class));
 		Map<String,Object> jsonData = new HashMap<String,Object>() {{
 			put("RequestId", "id");

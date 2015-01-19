@@ -1,7 +1,7 @@
 package org.sempmessaging.sempd.persistence.fs.io;
 
 import net.davidtanzer.jevents.EventComponents;
-import net.davidtanzer.jevents.testing.EventTestRule;
+import testing.EventTestRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

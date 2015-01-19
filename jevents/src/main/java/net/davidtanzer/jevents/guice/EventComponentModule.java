@@ -2,9 +2,10 @@ package net.davidtanzer.jevents.guice;
 
 import com.google.inject.AbstractModule;
 import net.davidtanzer.jevents.EventComponent;
+import net.davidtanzer.jevents.EventComponents;
 
 public abstract class EventComponentModule extends AbstractModule {
 	protected <T extends EventComponent> com.google.inject.binder.ScopedBindingBuilder bindEventComponent(Class<T> componentClass) {
-		return bind(componentClass).toProvider(ECProvider.forComponent(componentClass, getMembersInjector(componentClass)));
+		return bind(componentClass).toProvider(ECProvider.forComponent(componentClass, getMembersInjector(componentClass), getProvider(EventComponents.class)));
 	}
 }

@@ -18,7 +18,7 @@ public class SEMPServer {
 	private final AsyncExecutor asyncExecutor;
 
 	public SEMPServer(final ServerConfiguration serverConfiguration) {
-		this(serverConfiguration, Guice.createInjector(new LibSempModule(), new SempdProtocolModule()));
+		this(serverConfiguration, Guice.createInjector(new LibSempModule(), new SempdProtocolModule(), new SempServerModule()));
 	}
 
 	public SEMPServer(final ServerConfiguration serverConfiguration, final Injector injector) {
