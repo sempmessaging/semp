@@ -18,6 +18,7 @@ public class ConversationsView {
 	public ConversationsView(final ConversationsPanel conversationsPanel, final ConversationsViewComponentChangedListener componentChangedListener, final JavaFxEventHandlerProvider eventHandlerProvider) {
 		Args.notNull(conversationsPanel, "conversationsPanel");
 		Args.notNull(componentChangedListener, "componentChangedListener");
+		Args.notNull(eventHandlerProvider, "eventHandlerProvider");
 
 		componentChangedListener.notifyOnChanges(this);
 
