@@ -1,7 +1,26 @@
 apply plugin: 'java'
+apply plugin: 'idea'
+
+configurations {
+	provided
+	provided.extendsFrom(compile)
+}
+
+idea {
+	module {
+		scopes.PROVIDED.plus += [configurations.provided]
+	}
+}
+
+sourceSets {
+	main.compileClasspath += configurations.provided
+	test.compileClasspath += configurations.provided
+	test.runtimeClasspath += configurations.provided
+}
 
 dependencies {
 	compile project(':semp:values')
 	compile project(':semp:html')
 	compile project(':semp:sempc-ui')
+	provided 'com.google.inject:guice:3.0'
 }

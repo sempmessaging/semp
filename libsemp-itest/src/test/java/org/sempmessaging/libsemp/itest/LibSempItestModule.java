@@ -5,6 +5,7 @@ import net.davidtanzer.jevents.ComponentCodeGenerator;
 import net.davidtanzer.jevents.EventComponents;
 import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.guice.EventComponentModule;
+import net.davidtanzer.jevents.guice.EventComponentsProvider;
 import org.sempmessaging.sempd.core.serverkeys.ServerPublicVerificationKeysService;
 
 import static org.mockito.Mockito.mock;
@@ -18,13 +19,7 @@ public class LibSempItestModule extends EventComponentModule {
 
 	@Override
 	protected void configure() {
-		bind(ComponentCodeGenerator.class).to(JavassistComponentCodeGenerator.class);
-		try {
-			bind(EventComponents.class).toConstructor(EventComponents.class.getConstructor(ComponentCodeGenerator.class)).in(Scopes.SINGLETON);
-		} catch (NoSuchMethodException e) {
-			throw new IllegalStateException("Could not bind "+EventComponents.class, e);
-		}
-
+		EventComponentsProvider.setEventComponents(new EventComponents(new JavassistComponentCodeGenerator()));
 		bind(ServerPublicVerificationKeysService.class).toInstance(serverPublicVerificationKeysService);
 	}
 

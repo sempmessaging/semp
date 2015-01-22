@@ -20,13 +20,7 @@ public class GuiceBindingTest {
 		injector = Guice.createInjector(new EventComponentModule() {
 			@Override
 			protected void configure() {
-				bind(ComponentCodeGenerator.class).to(JavassistComponentCodeGenerator.class);
-				try {
-					bind(EventComponents.class).toConstructor(EventComponents.class.getConstructor(ComponentCodeGenerator.class)).in(Scopes.SINGLETON);
-				} catch (NoSuchMethodException e) {
-					throw new IllegalStateException("Could not bind "+EventComponents.class, e);
-				}
-
+				EventComponentsProvider.setEventComponents(new EventComponents(new JavassistComponentCodeGenerator()));
 				bindEventComponent(SomeComponent.class);
 			}
 		});

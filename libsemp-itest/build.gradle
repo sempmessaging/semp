@@ -1,6 +1,7 @@
 apply plugin: 'java'
 
 dependencies {
+	compile project(':semp:jevents-testing')
 	compile project(':semp:libsemp')
 	compile project(':semp:sempd')
 }

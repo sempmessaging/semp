@@ -7,6 +7,7 @@ import net.davidtanzer.jevents.ComponentCodeGenerator;
 import net.davidtanzer.jevents.EventComponents;
 import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.guice.EventComponentModule;
+import net.davidtanzer.jevents.guice.EventComponentsProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.sempmessaging.libsemp.request.Request;
@@ -25,13 +26,7 @@ public class ServerConnectionRequestsTest {
 		Injector injector = Guice.createInjector(new EventComponentModule() {
 			@Override
 			protected void configure() {
-				bind(ComponentCodeGenerator.class).to(JavassistComponentCodeGenerator.class);
-				try {
-					bind(EventComponents.class).toConstructor(EventComponents.class.getConstructor(ComponentCodeGenerator.class)).in(Scopes.SINGLETON);
-				} catch (NoSuchMethodException e) {
-					throw new IllegalStateException("Could not bind "+EventComponents.class, e);
-				}
-
+				EventComponentsProvider.setEventComponents(new EventComponents(new JavassistComponentCodeGenerator()));
 				bindEventComponent(TestRequest.class);
 			}
 		});

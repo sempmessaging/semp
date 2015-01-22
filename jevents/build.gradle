@@ -1,5 +1,23 @@
 apply plugin: 'java'
+apply plugin: 'idea'
+
+configurations {
+	provided
+	provided.extendsFrom(compile)
+}
+
+idea {
+	module {
+		scopes.PROVIDED.plus += [configurations.provided]
+	}
+}
+
+sourceSets {
+	main.compileClasspath += configurations.provided
+	test.compileClasspath += configurations.provided
+	test.runtimeClasspath += configurations.provided
+}
 
 dependencies {
-	compile 'com.google.inject:guice:4.0-beta5'
+	provided 'com.google.inject:guice:3.0'
 }

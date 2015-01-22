@@ -11,7 +11,7 @@ public abstract class EventComponent {
 	private HashMap<String, Object> events = new HashMap<>();
 	private HashMap<Object, Object> eventHandlers = new HashMap<>();
 
-	<T> T getEvent(final String eventName, final Class<T> eventType) {
+	public <T> T getEvent(final String eventName, final Class<T> eventType) {
 		if(!eventType.isInterface()) {
 			throw new IllegalStateException("Event type \""+eventType+"\" must be an interface.");
 		}
