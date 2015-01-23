@@ -36,6 +36,7 @@ body {
 
 .horizontal-split .first {
 	float: left;
+	width: 30%;
 	height: 100%;
 }
 
@@ -49,6 +50,7 @@ body {
 
 .horizontal-split .second {
 	float: left;
+	width: calc(70% - 2px);
 	height: 100%;
 }
 

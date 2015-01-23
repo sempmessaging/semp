@@ -21,5 +21,5 @@ sourceSets {
 dependencies {
 	compile project(':semp:jevents-cg')
 	compile project(':semp:sempc-ui-javafx')
-	provided 'com.google.inject:guice:3.0'
+	compile 'com.google.inject:guice:3.0'
 }
