@@ -18,4 +18,9 @@ public abstract class EmptyElement extends BaseElement implements Node {
 	public void render(final StringBuilder renderedResultBuilder) {
 		renderOpenTag(renderedResultBuilder);
 	}
+
+	@Override
+	public void visit(final NodeVisitor nodeVisitor) {
+		nodeVisitor.visitNode(this);
+	}
 }

@@ -2,6 +2,7 @@ package net.davidtanzer.html;
 
 import net.davidtanzer.html.values.AttributeName;
 import net.davidtanzer.html.values.AttributeValue;
+import net.davidtanzer.html.values.Id;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,5 +22,9 @@ public class Attributes {
 			renderedResultBuilder.append(attributes.get(name).value());
 			renderedResultBuilder.append("\"");
 		}
+	}
+
+	AttributeValue get(final AttributeName attributeName) {
+		return attributes.get(attributeName);
 	}
 }

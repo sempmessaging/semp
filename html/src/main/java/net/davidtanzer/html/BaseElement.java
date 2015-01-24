@@ -77,4 +77,8 @@ public abstract class BaseElement {
 			setAttribute(AttributeName.of("onmouseout"), eventHandler);
 		}
 	}
+
+	public <T extends AttributeValue, R> R processAttribute(final AttributeName attributeName, final AttributeProcessor<T, R> attributeProcessor) {
+		return attributeProcessor.process((T) attributes.get(attributeName));
+	}
 }

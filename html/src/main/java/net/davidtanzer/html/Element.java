@@ -42,4 +42,12 @@ public abstract class Element extends BaseElement implements Node {
 			child.render(renderedResultBuilder);
 		}
 	}
+
+	@Override
+	public void visit(final NodeVisitor nodeVisitor) {
+		for(Node child : children) {
+			child.visit(nodeVisitor);
+		}
+		nodeVisitor.visitNode(this);
+	}
 }

@@ -26,4 +26,9 @@ public class TextNode implements FlowContentNode {
 	public void render(final StringBuilder renderedResultBuilder) {
 		renderedResultBuilder.append(text);
 	}
+
+	@Override
+	public void visit(final NodeVisitor nodeVisitor) {
+		nodeVisitor.visitNode(this);
+	}
 }
