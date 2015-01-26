@@ -22,7 +22,7 @@ public class MainViewPanel extends HtmlComponent {
 	@Override
 	protected void initializeComponent() {
 		header = new Div();
-		header.cssClass(new CssClass("panel-header"));
+		header.cssClasses(new CssClass("border-primary"), new CssClass("background-secondary"), new CssClass("panel-header"));
 
 		content = new Div();
 		content.cssClass(new CssClass("panel-content"));

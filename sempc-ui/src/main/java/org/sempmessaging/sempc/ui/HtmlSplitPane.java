@@ -38,7 +38,7 @@ public class HtmlSplitPane extends HtmlComponent {
 		second.cssClass(new CssClass("second"));
 
 		divider = new Div();
-		divider.cssClass(new CssClass("divider"));
+		divider.cssClasses(new CssClass("border-primary"), new CssClass("divider"));
 	}
 
 	public void firstComponent(final HtmlComponent component) {
