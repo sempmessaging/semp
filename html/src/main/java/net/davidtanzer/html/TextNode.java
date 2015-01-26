@@ -1,9 +1,10 @@
 package net.davidtanzer.html;
 
 import net.davidtanzer.html.elements.FlowContentNode;
+import net.davidtanzer.html.elements.PhrasingContentNode;
 import net.davidtanzer.value.StringValue;
 
-public class TextNode implements FlowContentNode {
+public class TextNode implements FlowContentNode, PhrasingContentNode {
 	private final String text;
 
 	public TextNode(final StringValue text) {

@@ -5,7 +5,7 @@ import net.davidtanzer.html.elements.values.ImageSrc;
 import net.davidtanzer.html.values.AttributeName;
 import net.davidtanzer.html.values.TagName;
 
-public class Img extends EmptyElement implements FlowContentNode {
+public class Img extends EmptyElement implements FlowContentNode, PhrasingContentNode {
 	public Img(final ImageSrc imageSrc) {
 		super(TagName.of("img"));
 		src(imageSrc);

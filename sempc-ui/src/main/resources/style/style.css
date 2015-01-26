@@ -34,6 +34,15 @@ body {
 	padding: 0;
 }
 
+.icon-button {
+	width: 24px;
+	height: 24px;
+}
+
+.icon-button:hover {
+	background: #777;
+}
+
 .horizontal-split .first {
 	float: left;
 	width: 30%;
@@ -54,6 +63,41 @@ body {
 	height: 100%;
 }
 
+.panel-header {
+	width: 100%;
+	height: 36px;
+
+	border-bottom: 1px solid #777;
+	background: #ccc;
+
+	padding: 6px 12px;
+}
+
+.panel-header-component {
+	float: left;
+}
+
+.panel-header-headline {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: calc(100% - 30px);
+	margin-left: 6px;
+}
+
+.panel-header h2 {
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+.panel-content {
+	width: 100%;
+	height: calc(100% - 37px);
+
+	overflow-y: scroll;
+}
+
 .connection-status-panel {
 	padding: 2px;
 	position: absolute;
@@ -62,8 +106,6 @@ body {
 }
 
 .connection-status-panel .connection-status-icon {
-	width: 24px;
-	height: 24px;
 }
 
 .connection-status-details {

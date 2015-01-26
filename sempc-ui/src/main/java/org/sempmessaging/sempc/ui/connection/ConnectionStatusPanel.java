@@ -44,7 +44,7 @@ public class ConnectionStatusPanel extends HtmlComponent {
 	@Override
 	protected void initializeComponent() {
 		connectionImage = new Img(connectionStatusImages.get(viewModel.overallConnectionStatus.get()));
-		connectionImage.cssClass(new CssClass("connection-status-icon"));
+		connectionImage.cssClasses(new CssClass("connection-status-icon"), new CssClass("icon-button"));
 		connectionImage.events().onMouseOver(eventHandler(this::showConnectionDetails));
 		connectionImage.events().onMouseOut(eventHandler(this::hideConnectionDetails));
 
