@@ -6,6 +6,7 @@ import net.davidtanzer.html.values.AttributeValue;
 import net.davidtanzer.html.values.Id;
 import org.junit.Test;
 
+import static net.davidtanzer.html.query.HtmlQueries.selectAttribute;
 import static org.junit.Assert.assertEquals;
 
 public class SelectAttributeTest {
@@ -14,7 +15,7 @@ public class SelectAttributeTest {
 		Div element = new Div();
 		element.id(new Id("test_id"));
 
-		AttributeValue value = HtmlQueries.selectAttribute(AttributeName.of("id")).from(element);
+		AttributeValue value = selectAttribute(AttributeName.of("id")).from(element);
 
 		assertEquals(new Id("test_id"), value);
 	}

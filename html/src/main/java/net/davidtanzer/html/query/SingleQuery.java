@@ -19,7 +19,12 @@ public class SingleQuery {
 
 	public Node from(final Node... nodes) {
 		List<Node> selectedNodes = query.from(nodes);
-		return selectedNodes.get(0);
+		if(selectedNodes.size() > 1) {
+			throw new TooManyResultsException();
+		} else if(selectedNodes.size() == 1) {
+			return selectedNodes.get(0);
+		}
+		return null;
 	}
 
 	public AttributeQuery selectAttribute(final AttributeName attributeName) {

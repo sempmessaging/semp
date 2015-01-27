@@ -55,7 +55,7 @@ public class Query {
 		return singleElement().selectAttribute(attributeName);
 	}
 
-	private SingleQuery singleElement() {
+	public SingleQuery singleElement() {
 		return new SingleQuery(this);
 	}
 }

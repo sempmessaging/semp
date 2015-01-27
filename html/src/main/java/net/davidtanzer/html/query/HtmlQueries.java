@@ -17,4 +17,8 @@ public class HtmlQueries {
 	public static AttributeQuery selectAttribute(final AttributeName attributeName) {
 		return new AttributeQuery(attributeName);
 	}
+
+	public static Query selectAll() {
+		return new Query();
+	}
 }
