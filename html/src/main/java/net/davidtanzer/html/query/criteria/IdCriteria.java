@@ -13,7 +13,7 @@ public class IdCriteria implements Criteria {
 	}
 
 	@Override
-	public boolean matches(final Node node) {
+	public boolean matches(final Node node, final Node rootNode) {
 		if(node instanceof BaseElement) {
 			return ((BaseElement) node).processAttribute(AttributeName.of("id"), (Id value) -> id.equals(value));
 		}

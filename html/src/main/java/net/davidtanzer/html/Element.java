@@ -50,4 +50,8 @@ public abstract class Element extends BaseElement implements Node {
 		}
 		nodeVisitor.visitNode(this);
 	}
+
+	public boolean containsChild(final Node node) {
+		return children.contains(node);
+	}
 }
