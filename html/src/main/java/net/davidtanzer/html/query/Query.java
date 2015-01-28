@@ -2,7 +2,9 @@ package net.davidtanzer.html.query;
 
 import net.davidtanzer.html.Node;
 import net.davidtanzer.html.query.criteria.Criteria;
+import net.davidtanzer.html.query.criteria.IdCriteria;
 import net.davidtanzer.html.values.AttributeName;
+import net.davidtanzer.html.values.Id;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +37,18 @@ public class Query {
 		return result;
 	}
 
+	public AttributeQuery selectAttribute(final AttributeName attributeName) {
+		return singleElement().selectAttribute(attributeName);
+	}
+
+	public SingleQuery singleElement() {
+		return new SingleQuery(this);
+	}
+
+	public SingleQuery select(Id id) {
+		return new SingleQuery(this, new IdCriteria(id));
+	}
+
 	private void visitRootNode(final List<Node> result, final Node rootNode) {
 		rootNode.visit((currentNode) -> {
 			if (matchesCriteria(currentNode, rootNode)) {
@@ -51,11 +65,4 @@ public class Query {
 		return matches;
 	}
 
-	public AttributeQuery selectAttribute(final AttributeName attributeName) {
-		return singleElement().selectAttribute(attributeName);
-	}
-
-	public SingleQuery singleElement() {
-		return new SingleQuery(this);
-	}
 }

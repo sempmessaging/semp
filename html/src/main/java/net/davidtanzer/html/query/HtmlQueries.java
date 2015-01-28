@@ -1,13 +1,19 @@
 package net.davidtanzer.html.query;
 
+import net.davidtanzer.html.query.criteria.CssClassCriteria;
 import net.davidtanzer.html.query.criteria.DirectChildCriteria;
 import net.davidtanzer.html.query.criteria.IdCriteria;
 import net.davidtanzer.html.values.AttributeName;
+import net.davidtanzer.html.values.CssClass;
 import net.davidtanzer.html.values.Id;
 
 public class HtmlQueries {
 	public static SingleQuery select(final Id id) {
 		return new SingleQuery(new IdCriteria(id));
+	}
+
+	public static Query select(final CssClass cssClass) {
+		return new Query(new CssClassCriteria(cssClass));
 	}
 
 	public static Query selectChildren() {

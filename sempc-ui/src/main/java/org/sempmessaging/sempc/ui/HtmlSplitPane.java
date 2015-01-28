@@ -1,10 +1,8 @@
 package org.sempmessaging.sempc.ui;
 
-import com.google.inject.Inject;
 import net.davidtanzer.html.elements.Div;
 import net.davidtanzer.html.elements.FlowContentNode;
 import net.davidtanzer.html.values.CssClass;
-import net.davidtanzer.html.values.CssStyle;
 
 public class HtmlSplitPane extends HtmlComponent {
 	private Div first;
@@ -20,11 +18,15 @@ public class HtmlSplitPane extends HtmlComponent {
 
 	@Override
 	protected FlowContentNode[] getInnerHtml() {
-		first.removeAllChildren();
-		first.add(firstComponent.getHtml());
+		if(firstComponent != null) {
+			first.removeAllChildren();
+			first.add(firstComponent.getHtml());
+		}
 
-		second.removeAllChildren();
-		second.add(secondComponent.getHtml());
+		if(secondComponent != null) {
+			second.removeAllChildren();
+			second.add(secondComponent.getHtml());
+		}
 
 		return new FlowContentNode[] { first, divider, second };
 	}
