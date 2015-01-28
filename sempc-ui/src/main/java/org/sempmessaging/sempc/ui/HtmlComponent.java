@@ -6,6 +6,7 @@ import net.davidtanzer.html.elements.FlowContentNode;
 import net.davidtanzer.html.values.CssClass;
 import net.davidtanzer.html.values.EventHandlerScript;
 import net.davidtanzer.html.values.Id;
+import net.davidtanzer.jevents.EventComponent;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.ui.event.EventHandler;
 import org.sempmessaging.sempc.ui.event.EventHandlerProvider;
@@ -13,7 +14,7 @@ import org.sempmessaging.sempc.ui.event.EventHandlerProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class HtmlComponent {
+public abstract class HtmlComponent extends EventComponent {
 	private static int nextComponentId =0;
 	private final String id = nextId();
 

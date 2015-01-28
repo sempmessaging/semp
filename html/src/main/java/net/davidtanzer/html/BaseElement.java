@@ -69,12 +69,16 @@ public abstract class BaseElement {
 	}
 
 	public class Events {
-		public void onMouseOver(final EventHandlerScript eventHandler) {
-			setAttribute(AttributeName.of("onmouseover"), eventHandler);
+		public void onMouseOver(final EventHandlerScript eventHandlerScript) {
+			setAttribute(AttributeName.of("onmouseover"), eventHandlerScript);
 		}
 
-		public void onMouseOut(final EventHandlerScript eventHandler) {
-			setAttribute(AttributeName.of("onmouseout"), eventHandler);
+		public void onMouseOut(final EventHandlerScript eventHandlerScript) {
+			setAttribute(AttributeName.of("onmouseout"), eventHandlerScript);
+		}
+
+		public void onClick(final EventHandlerScript eventHandlerScript) {
+			setAttribute(AttributeName.of("onclick"), eventHandlerScript);
 		}
 	}
 

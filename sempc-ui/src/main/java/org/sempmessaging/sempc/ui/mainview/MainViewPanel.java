@@ -1,8 +1,9 @@
-package org.sempmessaging.sempc.ui;
+package org.sempmessaging.sempc.ui.mainview;
 
 import net.davidtanzer.html.elements.Div;
 import net.davidtanzer.html.elements.FlowContentNode;
 import net.davidtanzer.html.values.CssClass;
+import org.sempmessaging.sempc.ui.HtmlComponent;
 
 public class MainViewPanel extends HtmlComponent {
 	private Div header;

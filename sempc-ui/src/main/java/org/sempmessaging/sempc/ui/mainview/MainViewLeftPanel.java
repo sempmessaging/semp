@@ -1,4 +1,4 @@
-package org.sempmessaging.sempc.ui;
+package org.sempmessaging.sempc.ui.mainview;
 
 import com.google.inject.Inject;
 import net.davidtanzer.html.elements.FlowContentNode;
