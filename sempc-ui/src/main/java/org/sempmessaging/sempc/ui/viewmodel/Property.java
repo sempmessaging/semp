@@ -12,7 +12,6 @@ public class Property<T> {
 	}
 
 	public void set(final T value) {
-		T oldValue = this.value;
 		this.value = value;
 		owner.propertyChanged(this);
 	}

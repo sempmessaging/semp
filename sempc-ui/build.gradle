@@ -24,4 +24,7 @@ dependencies {
 	compile project(':semp:values')
 	compile project(':semp:sempc-core')
 	provided 'com.google.inject:guice:3.0'
+
+	testCompile project(':semp:jevents-cg')
+	testCompile project(':semp:jevents-testing')
 }
