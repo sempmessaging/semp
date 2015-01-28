@@ -1,13 +1,17 @@
 package org.sempmessaging.sempc.ui;
 
+import com.google.inject.Scopes;
 import net.davidtanzer.jevents.guice.EventComponentModule;
 import org.sempmessaging.sempc.ui.connection.ConnectionStatusViewModel;
-import org.sempmessaging.sempc.ui.menu.MenuOpenButton;
+import org.sempmessaging.sempc.ui.menu.MainMenu;
+import org.sempmessaging.sempc.ui.menu.MainMenuButton;
 
 public class SempcUiModule extends EventComponentModule {
 	@Override
 	protected void configure() {
-		bindEventComponent(MenuOpenButton.class);
+		bindEventComponent(MainMenuButton.class).in(Scopes.SINGLETON);
+		bindEventComponent(MainMenu.class).in(Scopes.SINGLETON);
+
 		bindEventComponent(ConnectionStatusViewModel.class);
 	}
 }

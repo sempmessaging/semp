@@ -11,18 +11,18 @@ import org.sempmessaging.sempc.ui.JsEventTest;
 
 import static net.davidtanzer.html.query.HtmlQueries.select;
 
-public class MenuOpenButtonTest extends JsEventTest {
+public class MainMenuButtonTest extends JsEventTest {
 	@Rule
 	public EventTestRule eventTestRule = new EventTestRule();
 
 	@Test
 	public void sendsEventWhenButtonIsClicked() {
-		MenuOpenButton menuOpenButton = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(MenuOpenButton.class);
-		menuOpenButton.setEventHandlerProvider(eventHandlerProvider());
+		MainMenuButton mainMenuButton = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(MainMenuButton.class);
+		mainMenuButton.setEventHandlerProvider(eventHandlerProvider());
 
-		eventTestRule.subscribeMandatory(menuOpenButton, menuOpenButton.buttonClickedEvent(), () -> {});
+		eventTestRule.subscribeMandatory(mainMenuButton, mainMenuButton.buttonClickedEvent(), () -> {});
 
-		Img buttonImage = (Img) select(new CssClass("icon-button")).singleElement().from(menuOpenButton.getHtml());
+		Img buttonImage = (Img) select(new CssClass("icon-button")).singleElement().from(mainMenuButton.getHtml());
 		click(buttonImage);
 	}
 }

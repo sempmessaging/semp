@@ -5,12 +5,18 @@ import net.davidtanzer.html.elements.Div;
 import net.davidtanzer.html.values.Id;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.sempmessaging.sempc.ui.ComponentChangedListener;
 import org.sempmessaging.sempc.ui.HtmlSplitPane;
 import org.sempmessaging.sempc.ui.menu.MainMenu;
+import org.sempmessaging.sempc.ui.menu.ShowMainMenuEvent;
 
 import static net.davidtanzer.html.query.HtmlQueries.select;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class MainViewTest {
@@ -43,6 +49,41 @@ public class MainViewTest {
 		Node mainMenuDiv = select(new Id("mainMenu")).from(mainView.getHtml());
 
 		assertNull(mainMenuDiv);
+	}
+
+	@Test
+	public void showsMainMenuWhenShowMenuEventWasReceived() {
+		ArgumentCaptor<ShowMainMenuEvent> eventHandlerCaptor = ArgumentCaptor.forClass(ShowMainMenuEvent.class);
+		verify(mainMenu).subscribe(any(), eventHandlerCaptor.capture());
+		eventHandlerCaptor.getValue().showMainMenu(true);
+
+		Node mainMenuDiv = select(new Id("mainMenu")).from(mainView.getHtml());
+
+		assertNotNull(mainMenuDiv);
+	}
+
+	@Test
+	public void showsMainMenuWhenHideMenuEventWasReceived() {
+		ArgumentCaptor<ShowMainMenuEvent> eventHandlerCaptor = ArgumentCaptor.forClass(ShowMainMenuEvent.class);
+		verify(mainMenu).subscribe(any(), eventHandlerCaptor.capture());
+		eventHandlerCaptor.getValue().showMainMenu(true);
+		eventHandlerCaptor.getValue().showMainMenu(false);
+
+		Node mainMenuDiv = select(new Id("mainMenu")).from(mainView.getHtml());
+
+		assertNull(mainMenuDiv);
+	}
+
+	@Test
+	public void sendsComponentChangedWhenMenuEventIsReceived() {
+		ComponentChangedListener ccl = mock(ComponentChangedListener.class);
+		mainView.setComponentChangedListener(ccl);
+
+		ArgumentCaptor<ShowMainMenuEvent> eventHandlerCaptor = ArgumentCaptor.forClass(ShowMainMenuEvent.class);
+		verify(mainMenu).subscribe(any(), eventHandlerCaptor.capture());
+		eventHandlerCaptor.getValue().showMainMenu(true);
+
+		verify(ccl).htmlComponentChanged(anyString(), any());
 	}
 
 	@Test

@@ -10,7 +10,8 @@ import org.sempmessaging.sempc.ui.menu.MainMenu;
 
 public class MainView extends HtmlComponent {
 	private final HtmlSplitPane splitPane;
-	private Div containerDiv;
+	private final MainMenu mainMenu;
+	private boolean showMenu;
 
 	@Inject
 	public MainView(final HtmlSplitPane splitPane, final MainViewLeftPanel leftPanel, final MainViewRightPanel rightPanel, final MainMenu mainMenu) {
@@ -22,19 +23,22 @@ public class MainView extends HtmlComponent {
 		splitPane.firstComponent(leftPanel);
 		splitPane.secondComponent(rightPanel);
 
+		mainMenu.subscribe(mainMenu.showMainMenuEvent(), this::showMainMenu);
+
 		this.splitPane = splitPane;
+		this.mainMenu = mainMenu;
 	}
 
 	@Override
 	protected FlowContentNode[] getInnerHtml() {
-		containerDiv.removeAllChildren();
-		containerDiv.add(splitPane.getHtml());
-
-		return new FlowContentNode[] { containerDiv };
+		if(showMenu) {
+			return new FlowContentNode[] { mainMenu.getHtml(), splitPane.getHtml() };
+		}
+		return new FlowContentNode[] { splitPane.getHtml() };
 	}
 
-	@Override
-	protected void initializeComponent() {
-		containerDiv = new Div();
+	private void showMainMenu(final boolean showMenu) {
+		this.showMenu = showMenu;
+		componentChanged();
 	}
 }
