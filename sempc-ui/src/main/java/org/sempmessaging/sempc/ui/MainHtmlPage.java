@@ -6,11 +6,11 @@ import net.davidtanzer.html.elements.values.CssLink;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.ui.connection.ConnectionStatusPanel;
 
-public class ConversationsPanel {
+public class MainHtmlPage {
 	private final Html rootNode;
 
 	@Inject
-	public ConversationsPanel(final HtmlSplitPane splitPane, final ConnectionStatusPanel connectionStatusPanel, final MainViewLeftPanel leftPanel, final MainViewRightPanel rightPanel) {
+	public MainHtmlPage(final HtmlSplitPane splitPane, final ConnectionStatusPanel connectionStatusPanel, final MainViewLeftPanel leftPanel, final MainViewRightPanel rightPanel) {
 		Args.notNull(splitPane, "splitPane");
 		Args.notNull(connectionStatusPanel, "connectionStatusPanel");
 		Args.notNull(leftPanel, "leftPanel");
