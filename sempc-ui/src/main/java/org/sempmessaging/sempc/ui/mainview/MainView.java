@@ -1,11 +1,10 @@
 package org.sempmessaging.sempc.ui.mainview;
 
 import com.google.inject.Inject;
-import net.davidtanzer.html.elements.Div;
 import net.davidtanzer.html.elements.FlowContentNode;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.ui.HtmlComponent;
-import org.sempmessaging.sempc.ui.HtmlSplitPane;
+import org.sempmessaging.sempc.ui.components.HtmlSplitPane;
 import org.sempmessaging.sempc.ui.menu.MainMenu;
 
 public class MainView extends HtmlComponent {

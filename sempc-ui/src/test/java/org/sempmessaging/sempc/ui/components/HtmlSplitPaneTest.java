@@ -1,4 +1,4 @@
-package org.sempmessaging.sempc.ui;
+package org.sempmessaging.sempc.ui.components;
 
 import net.davidtanzer.html.Node;
 import net.davidtanzer.html.elements.Div;
@@ -7,6 +7,7 @@ import net.davidtanzer.html.values.CssClass;
 import net.davidtanzer.html.values.Id;
 import org.junit.Before;
 import org.junit.Test;
+import org.sempmessaging.sempc.ui.HtmlComponent;
 
 import static net.davidtanzer.html.query.HtmlQueries.select;
 import static org.junit.Assert.*;

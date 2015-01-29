@@ -12,6 +12,6 @@ public class SempcUiModule extends EventComponentModule {
 		bindEventComponent(MainMenuButton.class).in(Scopes.SINGLETON);
 		bindEventComponent(MainMenu.class).in(Scopes.SINGLETON);
 
-		bindEventComponent(ConnectionStatusViewModel.class);
+		bindEventComponent(ConnectionStatusViewModel.class).in(Scopes.SINGLETON);
 	}
 }

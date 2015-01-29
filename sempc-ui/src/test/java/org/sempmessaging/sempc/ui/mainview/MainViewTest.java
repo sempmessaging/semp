@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.sempmessaging.sempc.ui.ComponentChangedListener;
-import org.sempmessaging.sempc.ui.HtmlSplitPane;
+import org.sempmessaging.sempc.ui.components.HtmlSplitPane;
 import org.sempmessaging.sempc.ui.menu.MainMenu;
 import org.sempmessaging.sempc.ui.menu.ShowMainMenuEvent;
 

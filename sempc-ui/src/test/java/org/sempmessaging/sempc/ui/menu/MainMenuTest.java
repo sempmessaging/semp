@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.sempmessaging.sempc.ui.ButtonClickedEvent;
+import org.sempmessaging.sempc.ui.components.ButtonClickedEvent;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;

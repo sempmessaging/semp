@@ -1,36 +1,12 @@
 package org.sempmessaging.sempc.ui.menu;
 
-import com.google.inject.Singleton;
-import net.davidtanzer.html.elements.FlowContentNode;
-import net.davidtanzer.html.elements.Img;
 import net.davidtanzer.html.elements.values.ImageSrc;
 import net.davidtanzer.html.values.CssClass;
-import net.davidtanzer.jevents.Event;
-import org.sempmessaging.sempc.ui.ButtonClickedEvent;
-import org.sempmessaging.sempc.ui.HtmlComponent;
+import org.sempmessaging.sempc.ui.components.IconButton;
 
-public abstract class MainMenuButton extends HtmlComponent {
-	@Event
-	public abstract ButtonClickedEvent buttonClickedEvent();
-
-	private Img buttonImage;
-
+public abstract class MainMenuButton extends IconButton {
 	public MainMenuButton() {
+		super(new ImageSrc("res:///img/menu24.png"));
 		cssClass(new CssClass("panel-header-component"));
-	}
-
-	@Override
-	protected FlowContentNode[] getInnerHtml() {
-		return new FlowContentNode[] { buttonImage };
-	}
-
-	@Override
-	protected void initializeComponent() {
-		buttonImage = new Img(new ImageSrc("res:///img/menu24.png"));
-		buttonImage.cssClasses(new CssClass("icon-button"));
-
-		buttonImage.events().onClick(eventHandler(() -> {
-			send(buttonClickedEvent()).buttonClicked();
-		}));
 	}
 }
