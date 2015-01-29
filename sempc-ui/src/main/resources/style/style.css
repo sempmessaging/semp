@@ -47,6 +47,7 @@ body {
 }
 
 .icon-button {
+	margin: 0 0.5em;
 	width: 24px;
 	height: 24px;
 }
@@ -86,22 +87,25 @@ body {
 	padding: 6px 12px;
 }
 
+.panel-header {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .panel-header-component {
 	float: left;
 }
 
 .panel-header-headline {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	width: calc(100% - 30px);
-	margin-left: 6px;
+	display: inline;
 }
 
 .panel-header h2 {
 	font-size: 20px;
 	margin: 0;
 	padding: 0;
+	display: inline;
 }
 
 .panel-content {
@@ -112,31 +116,13 @@ body {
 }
 
 .connection-status-panel {
-	padding: 2px;
-	position: absolute;
-	bottom: 0;
-	left: 0;
+	margin-left: 0.5em;
+	display: inline;
 }
 
 .connection-status-panel .connection-status-icon {
-}
-
-.connection-status-details {
-	position: absolute;
-	bottom: 36px;
-	left: 12px;
-
-	width: 250px;
-	overflow-x: auto;
-
-	background: white;
-	border: 2px solid #777;
-	padding: 0.5em 1em;
-}
-
-.connection-status-details .connection-status-icon {
-	width: 16px;
-	height: 16px;
+	width: 24px;
+	height: 24px;
 }
 
 .menu-overlay {

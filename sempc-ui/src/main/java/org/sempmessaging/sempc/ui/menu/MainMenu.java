@@ -1,8 +1,10 @@
 package org.sempmessaging.sempc.ui.menu;
 
 import com.google.inject.Inject;
+import net.davidtanzer.html.TextNode;
 import net.davidtanzer.html.elements.Div;
 import net.davidtanzer.html.elements.FlowContentNode;
+import net.davidtanzer.html.elements.Headline;
 import net.davidtanzer.html.values.CssClass;
 import net.davidtanzer.jevents.Event;
 import org.sempmessaging.libsemp.arguments.Args;
@@ -36,6 +38,12 @@ public abstract class MainMenu extends HtmlComponent {
 		Div header = new Div();
 		header.cssClasses(new CssClass("border-primary"), new CssClass("background-secondary"), new CssClass("panel-header"));
 		header.add(mainMenuCloseButton.getHtml());
+
+		Headline accountsHeadline = new Headline(Headline.HeadlineLevel.H2);
+		accountsHeadline.add(new TextNode("Accounts"));
+		header.add(accountsHeadline);
+
+		header.add(connectionStatusPanel.getHtml());
 
 		Div content = new Div();
 		content.cssClasses(new CssClass("panel-content"), new CssClass("background-primary"));

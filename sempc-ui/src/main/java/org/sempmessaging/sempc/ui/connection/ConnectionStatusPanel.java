@@ -29,7 +29,6 @@ public class ConnectionStatusPanel extends HtmlComponent {
 	}};
 
 	private Img connectionImage;
-	private Div connectionDetails;
 
 	@Inject
 	public ConnectionStatusPanel(final ConnectionStatusViewModel viewModel) {
@@ -44,53 +43,16 @@ public class ConnectionStatusPanel extends HtmlComponent {
 	@Override
 	protected void initializeComponent() {
 		connectionImage = new Img(connectionStatusImages.get(viewModel.overallConnectionStatus.get()));
-		connectionImage.cssClasses(new CssClass("connection-status-icon"), new CssClass("icon-button"));
-		connectionImage.events().onMouseOver(eventHandler(this::showConnectionDetails));
-		connectionImage.events().onMouseOut(eventHandler(this::hideConnectionDetails));
-
-		connectionDetails = new Div();
-		connectionDetails.style(new CssStyle("display: none;"));
-		connectionDetails.cssClass(new CssClass("connection-status-details"));
+		connectionImage.cssClasses(new CssClass("connection-status-icon"));
 	}
 
 	@Override
 	protected FlowContentNode[] getInnerHtml() {
 		connectionImage.src(connectionStatusImages.get(viewModel.overallConnectionStatus.get()));
-		return new FlowContentNode[] { connectionImage, connectionDetails };
+		return new FlowContentNode[] { connectionImage };
 	}
 
 	private void viewModelPropertyChanged(final Property<?> property) {
-		if(property == viewModel.accountStatuses) {
-			reinitializeConnectionDetailsDiv();
-		}
-		componentChanged();
-	}
-
-	private void reinitializeConnectionDetailsDiv() {
-		connectionDetails.removeAllChildren();
-
-		for(AccountStatus accountStatus : viewModel.accountStatuses.get()) {
-			Div accountStatusDiv = new Div();
-
-			Img statusImage = new Img(connectionStatusImages.get(accountStatus.connectionStatus()));
-			statusImage.cssClass(new CssClass("connection-status-icon"));
-			accountStatusDiv.add(statusImage);
-
-			accountStatusDiv.add(new TextNode(" "));
-			TextNode statusText = new TextNode(accountStatus.accountName());
-			accountStatusDiv.add(statusText);
-
-			connectionDetails.add(accountStatusDiv);
-		}
-	}
-
-	public void showConnectionDetails() {
-		connectionDetails.style(new CssStyle("display: block;"));
-		componentChanged();
-	}
-
-	public void hideConnectionDetails() {
-		connectionDetails.style(new CssStyle("display: none;"));
 		componentChanged();
 	}
 }
