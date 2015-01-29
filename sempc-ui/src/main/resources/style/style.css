@@ -38,6 +38,10 @@ body {
 	border-color: #777;
 }
 
+.background-primary {
+	background: white;
+}
+
 .background-secondary {
 	background: #ccc;
 }
@@ -144,5 +148,16 @@ body {
 	top: 0;
 	bottom: 0;
 
-	background: rgba(255, 255, 255, 0.5);
+	background: rgba(127, 127, 127, 0.75);
+}
+
+.menu-container {
+	width: 100%;
+	height: 100%;
+	max-width: 400px;
+
+	border-right-style: solid;
+	border-right-width: 2px;
+
+	box-shadow: 2px 2px 3px #555;
 }

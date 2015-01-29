@@ -19,21 +19,33 @@ public class MainMenuTest {
 	public EventTestRule eventTestRule = new EventTestRule();
 
 	private MainMenu mainMenu;
-	private MainMenuButton mainMenuButton;
 
 	@Before
 	public void setup() {
 		mainMenu = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(MainMenu.class);
-		mainMenuButton = mock(MainMenuButton.class);
-		mainMenu.setMainMenuButton(mainMenuButton);
 	}
 
 	@Test
 	public void sendsShowMenuEventWhenMainMenuButtonIsClicked() {
+		MainMenuButton mainMenuButton = mock(MainMenuButton.class);
+		mainMenu.setMainMenuButton(mainMenuButton);
+
 		ArgumentCaptor<ButtonClickedEvent> eventCaptor = ArgumentCaptor.forClass(ButtonClickedEvent.class);
 		verify(mainMenuButton).subscribe(any(), eventCaptor.capture());
 
 		eventTestRule.subscribeMandatory(mainMenu, mainMenu.showMainMenuEvent(), (show) -> assertTrue(show));
+		eventCaptor.getValue().buttonClicked();
+	}
+
+	@Test
+	public void sendsHideMenuEventWhenMainMenuCloseButtonIsClicked() {
+		MainMenuCloseButton closeButton = mock(MainMenuCloseButton.class);
+		mainMenu.setMainMenuCloseButton(closeButton);
+
+		ArgumentCaptor<ButtonClickedEvent> eventCaptor = ArgumentCaptor.forClass(ButtonClickedEvent.class);
+		verify(closeButton).subscribe(any(), eventCaptor.capture());
+
+		eventTestRule.subscribeMandatory(mainMenu, mainMenu.showMainMenuEvent(), (show) -> assertFalse(show));
 		eventCaptor.getValue().buttonClicked();
 	}
 }

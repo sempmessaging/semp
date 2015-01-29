@@ -80,6 +80,10 @@ public abstract class BaseElement {
 		public void onClick(final EventHandlerScript eventHandlerScript) {
 			setAttribute(AttributeName.of("onclick"), eventHandlerScript);
 		}
+
+		public void onTouchStart(final EventHandlerScript eventHandlerScript) {
+			setAttribute(AttributeName.of("ontouchstart"), eventHandlerScript);
+		}
 	}
 
 	public <T extends AttributeValue, R> R processAttribute(final AttributeName attributeName, final AttributeProcessor<T, R> attributeProcessor) {

@@ -31,8 +31,6 @@ public abstract class IconButton extends HtmlComponent {
 		buttonImage = new Img(imageSrc);
 		buttonImage.cssClasses(new CssClass("icon-button"));
 
-		buttonImage.events().onClick(eventHandler(() -> {
-			send(buttonClickedEvent()).buttonClicked();
-		}));
+		buttonImage.events().onClick(eventHandler(() -> send(buttonClickedEvent()).buttonClicked()));
 	}
 }
