@@ -32,6 +32,11 @@ public class SEMPClient extends Application {
 		primaryStage.setScene(new Scene(mainView));
 		primaryStage.setTitle("SEMP Client");
 		primaryStage.show();
+		primaryStage.setOnCloseRequest((windowEvent) -> {
+			if(sideHatch != null) {
+				sideHatch.shutdown();
+			}
+		});
 
 		Accounts accounts = injector.getInstance(Accounts.class);
 		accounts.connect();

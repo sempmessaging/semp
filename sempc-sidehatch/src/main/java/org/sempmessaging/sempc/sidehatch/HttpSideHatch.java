@@ -20,6 +20,7 @@ public class HttpSideHatch implements SideHatch {
 
 	public static final String CONTEXT_PATH = "/sidehatch";
 	static MainHtmlPage mainHtmlPage;
+	private Undertow server;
 
 	@Override
 	public void start(final MainHtmlPage mainHtmlPage) {
@@ -27,6 +28,11 @@ public class HttpSideHatch implements SideHatch {
 				.addMapping("/*"));
 
 		this.mainHtmlPage = mainHtmlPage;
+	}
+
+	@Override
+	public void shutdown() {
+		server.stop();
 	}
 
 	private void startUndertow(final ServletInfo servlet) {
@@ -43,7 +49,7 @@ public class HttpSideHatch implements SideHatch {
 			HttpHandler servletHandler = manager.start();
 			PathHandler path = Handlers.path(Handlers.redirect(CONTEXT_PATH))
 					.addPrefixPath(CONTEXT_PATH, servletHandler);
-			Undertow server = Undertow.builder()
+			server = Undertow.builder()
 					.addHttpListener(8080, "localhost")
 					.setHandler(path)
 					.build();

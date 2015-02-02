@@ -5,4 +5,5 @@ import org.sempmessaging.sempc.ui.MainHtmlPage;
 
 public interface SideHatch {
 	void start(MainHtmlPage mainHtmlPage);
+	void shutdown();
 }
