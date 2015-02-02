@@ -15,6 +15,7 @@ import org.sempmessaging.sempc.ui.javafx.urls.SEMPUrlStreamHandlerFactory;
 import java.net.URL;
 
 public class SEMPClient extends Application {
+	private static SideHatch sideHatch;
 	private final Injector injector;
 
 	public SEMPClient() {
@@ -34,10 +35,18 @@ public class SEMPClient extends Application {
 
 		Accounts accounts = injector.getInstance(Accounts.class);
 		accounts.connect();
+
+		if(sideHatch != null) {
+			sideHatch.start(mainView.getHtmlPage());
+		}
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	static void launchWithSideHatch(final SideHatch sideHatch, final String[] args) {
+		SEMPClient.sideHatch = sideHatch;
+		launch(args);
+	}
 }

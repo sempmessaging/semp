@@ -1,6 +1,6 @@
 include ':jevents', ':values', ':html',
 		':libsemp-core', ':libsemp', ':libsemp-itest',
-		':sempc', ':sempc-core', ':sempc-connect', ':sempc-persistence-fs', ':sempc-ui', ':sempc-ui-javafx',
+		':sempc', ':sempc-core', ':sempc-connect', ':sempc-persistence-fs', ':sempc-ui', ':sempc-ui-javafx', ':sempc-sidehatch',
 		':sempd', ':sempd-core', ':sempd-protocol', ':sempd-persistence-fs'
 
 rootProject.name = ':semp'

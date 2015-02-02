@@ -1,0 +1,9 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+dependencies {
+	compile project(':semp:sempc')
+
+	compile 'io.undertow:undertow-core:1.2.0.Beta6'
+	compile 'io.undertow:undertow-servlet:1.2.0.Beta6'
+}

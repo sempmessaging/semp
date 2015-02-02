@@ -1,6 +1,7 @@
 package org.sempmessaging.sempc.ui.javafx;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import javafx.scene.Node;
 import javafx.scene.web.WebEngine;
@@ -13,12 +14,15 @@ import org.sempmessaging.sempc.ui.MainHtmlPage;
 @Singleton
 public class ConversationsView {
 	private final WebView webView = new WebView();
+	private final MainHtmlPage mainHtmlPage;
 
 	@Inject
 	public ConversationsView(final MainHtmlPage mainHtmlPage, final ConversationsViewComponentChangedListener componentChangedListener, final JavaFxEventHandlerProvider eventHandlerProvider) {
-		Args.notNull(mainHtmlPage, "conversationsPanel");
+		Args.notNull(mainHtmlPage, "mainHtmlPage");
 		Args.notNull(componentChangedListener, "componentChangedListener");
 		Args.notNull(eventHandlerProvider, "eventHandlerProvider");
+
+		this.mainHtmlPage = mainHtmlPage;
 
 		componentChangedListener.notifyOnChanges(this);
 
@@ -35,5 +39,9 @@ public class ConversationsView {
 
 	WebEngine engine() {
 		return webView.getEngine();
+	}
+
+	public MainHtmlPage getHtmlPage() {
+		return mainHtmlPage;
 	}
 }

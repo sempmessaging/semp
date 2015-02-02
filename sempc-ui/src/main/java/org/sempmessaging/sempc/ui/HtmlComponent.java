@@ -21,6 +21,7 @@ public abstract class HtmlComponent extends EventComponent {
 	private ComponentChangedListener componentChangedListener;
 	private List<CssClass> cssClasses = new ArrayList<>();
 	private EventHandlerProvider eventHandlerProvider;
+	private boolean isInitialized = false;
 
 	private static synchronized String nextId() {
 		int componentId = nextComponentId;
@@ -29,7 +30,10 @@ public abstract class HtmlComponent extends EventComponent {
 	}
 
 	public FlowContentNode getHtml() {
-		initializeComponent();
+		if(!isInitialized) {
+			initializeComponent();
+			isInitialized = true;
+		}
 
 		Div container = new Div();
 		container.id(new Id(id));
