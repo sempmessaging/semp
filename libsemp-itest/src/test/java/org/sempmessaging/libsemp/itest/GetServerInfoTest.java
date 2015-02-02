@@ -7,8 +7,8 @@ import org.junit.*;
 import org.sempmessaging.libsemp.LibSempModule;
 import org.sempmessaging.libsemp.connection.ServerConnection;
 import org.sempmessaging.libsemp.key.*;
-import org.sempmessaging.libsemp.request.serverpublickeys.GetServerPublicVerificationKeysRequest;
-import org.sempmessaging.libsemp.request.serverpublickeys.ServerName;
+import org.sempmessaging.libsemp.request.serverinfo.GetServerInfoRequest;
+import org.sempmessaging.libsemp.request.serverinfo.ServerName;
 import org.sempmessaging.libsemp.roundrobin.RoundRobinThread;
 import org.sempmessaging.sempd.SEMPServer;
 import org.sempmessaging.sempd.configuration.ServerConfiguration;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class GetServerPublicVerificationKeysTest {
+public class GetServerInfoTest {
 	public static final int SERVER_TEST_PORT = 19930;
 
 	@Rule
@@ -74,7 +74,7 @@ public class GetServerPublicVerificationKeysTest {
 		when(itestModule.serverPublicVerificationKeysService().listPublicVerificationKeys())
 				.thenReturn(publicVerificationKeys);
 
-		GetServerPublicVerificationKeysRequest request = serverConnection.newRequest(GetServerPublicVerificationKeysRequest.class);
+		GetServerInfoRequest request = serverConnection.newRequest(GetServerInfoRequest.class);
 		request.requestKeysForServer(new ServerName("example.com"));
 
 		eventTestRule.subscribeMandatory(request, request.publicKeysReceivedEvent(), (keys) -> {

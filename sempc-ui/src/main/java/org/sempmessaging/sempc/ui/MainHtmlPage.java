@@ -1,7 +1,6 @@
 package org.sempmessaging.sempc.ui;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import net.davidtanzer.html.elements.Html;
 import net.davidtanzer.html.elements.values.CssLink;
 import org.sempmessaging.libsemp.arguments.Args;

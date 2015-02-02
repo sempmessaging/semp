@@ -1,4 +1,4 @@
-package org.sempmessaging.sempd.protocol.requests.serverpublickeys;
+package org.sempmessaging.sempd.protocol.requests.serverinfo;
 
 import org.junit.Before;
 import org.junit.Test;

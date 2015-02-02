@@ -1,4 +1,4 @@
-package org.sempmessaging.sempd.protocol.requests.serverpublickeys;
+package org.sempmessaging.sempd.protocol.requests.serverinfo;
 
 import com.google.inject.Inject;
 import org.sempmessaging.libsemp.arguments.Args;
@@ -9,12 +9,12 @@ import org.sempmessaging.sempd.protocol.requests.handler.OneTimeRequestHandler;
 
 import java.util.Map;
 
-public class GetServerPublicVerificationKeysHandler extends OneTimeRequestHandler {
+public class GetServerInfoHandler extends OneTimeRequestHandler {
 	private final ServerPublicVerificationKeysService keysService;
 	private PublicVerificationKeysToResponseDataTranslator keysTranslator;
 
 	@Inject
-	public GetServerPublicVerificationKeysHandler(final ServerPublicVerificationKeysService keysService, final PublicVerificationKeysToResponseDataTranslator keysTranslator) {
+	public GetServerInfoHandler(final ServerPublicVerificationKeysService keysService, final PublicVerificationKeysToResponseDataTranslator keysTranslator) {
 		Args.notNull(keysService, "keysService");
 		Args.notNull(keysTranslator, "keysTranslator");
 

@@ -1,4 +1,4 @@
-package org.sempmessaging.sempd.protocol.requests.serverpublickeys;
+package org.sempmessaging.sempd.protocol.requests.serverinfo;
 
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.libsemp.key.*;

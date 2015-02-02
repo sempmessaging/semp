@@ -1,4 +1,4 @@
-package org.sempmessaging.sempd.protocol.requests.serverpublickeys;
+package org.sempmessaging.sempd.protocol.requests.serverinfo;
 
 import com.google.inject.Inject;
 import org.sempmessaging.libsemp.arguments.Args;
@@ -19,7 +19,7 @@ public class PublicVerificationKeysToResponseDataTranslator {
 
 	public ResponseData toResponse(final PublicVerificationKeys keys) {
 		Args.notNull(keys, "keys");
-		ServerPublicVerificationKeysResponseData responseData = new ServerPublicVerificationKeysResponseData();
+		ServerInfoResponseData responseData = new ServerInfoResponseData();
 
 		ArrayList<PublicVerificationKeyResponseData> translatedKeys = new ArrayList<>();
 		keys.forEach((key) -> translatedKeys.add(keyTranslator.toResponse(key)));

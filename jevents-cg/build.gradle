@@ -4,4 +4,6 @@ apply plugin: 'idea'
 dependencies {
 	compile project(':semp:jevents')
 	compile 'javassist:javassist:3.12.1.GA'
+
+	testCompile 'com.google.inject:guice:3.0'
 }

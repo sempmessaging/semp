@@ -1,4 +1,4 @@
-package org.sempmessaging.libsemp.request.serverpublickeys;
+package org.sempmessaging.libsemp.request.serverinfo;
 
 import org.sempmessaging.libsemp.key.PublicVerificationKey;
 

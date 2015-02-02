@@ -1,4 +1,4 @@
-package org.sempmessaging.libsemp.request.serverpublickeys;
+package org.sempmessaging.libsemp.request.serverinfo;
 
 import com.google.inject.Provider;
 import net.davidtanzer.jevents.EventComponents;
@@ -27,16 +27,16 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.sempmessaging.libsemp.PredicateMatcher.argMatches;
 
-public class GetServerPublicVerificationKeysRequestTest {
+public class GetServerInfoRequestTest {
 	@Rule
 	public EventTestRule eventTestRule = new EventTestRule();
 
-	private GetServerPublicVerificationKeysRequest request;
+	private GetServerInfoRequest request;
 	private JSONSender jsonSender;
 
 	@Before
 	public void setup() {
-		request = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(GetServerPublicVerificationKeysRequest.class);
+		request = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(GetServerInfoRequest.class);
 
 		Provider<JsonMapToPublicVerificationKeyTranslator> keyTranslatorProvider = mock(Provider.class);
 		when(keyTranslatorProvider.get()).thenAnswer((invocation) -> new JsonMapToPublicVerificationKeyTranslator(new JsonMapTranslator()));
@@ -61,7 +61,7 @@ public class GetServerPublicVerificationKeysRequestTest {
 		request.start();
 
 		verify(jsonSender).send(
-				argMatches((m) -> "semp.example.com".equals(m.get("GetServerPublicVerificationKeys")),
+				argMatches((m) -> "semp.example.com".equals(m.get("GetServerInfo")),
 				"JSON Data must contain correct server name"));
 	}
 
@@ -114,7 +114,7 @@ public class GetServerPublicVerificationKeysRequestTest {
 
 	private Map<String, Object> preparePublicKeysResponse() {
 		return new HashMap<String, Object>() {{
-			put(GetServerPublicVerificationKeysRequest.SERVER_PUBLIC_KEYS_JSON_IDENTIFIER,  preparePublicKeysList());
+			put(GetServerInfoRequest.SERVER_PUBLIC_KEYS_JSON_IDENTIFIER,  preparePublicKeysList());
 		}};
 	}
 

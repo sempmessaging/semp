@@ -12,21 +12,21 @@ All requests and responses are JSON objects. After every request or response JSO
 
 A SEMP server must support the following commands:
 
-## GetServerPublicVerificationKeys
+## GetServerInfo
 
-The client requests the public keys of the server. This request and its response are never sent in an encrypted envelope.
+The client requests the public keys and other information of the server. This request and its response are never sent in an encrypted envelope.
 
 There is only one current public key, all other public keys have an "ObsoleteBy" field that contains the key id of the next public key. Every public key (except the first) must be signed with the previous key. The client should check if the key signatures are consistent. The client should also check if the keys are consistent with any previously saved server keys.
 
-Those public keys can only be used to verify the signatures of other keys. The client must not encrypt any data with them.
+The public verification keys can only be used to verify the signatures of other keys. The client must not encrypt any data with them. The public encryption keys can be used to encrypt data that is sent to the server.
 
-The client can ask his "own" server for public keys of other servers.
+The client can (and should) ask his "own" server for public keys of other servers.
 
 **Client:**
 ```
 {
     "RequestId": /* A unique (within this session) identifier for this request. */
-    "GetServerPublicVerificationKeys": "semp.example.com"
+    "GetServerInfo": "semp.example.com"
 }
 ```
 
@@ -54,6 +54,12 @@ The client can ask his "own" server for public keys of other servers.
             "Signature": /* The signature of this key, signed with the previous key. */
         }
     ]
+    "ServerPublicEncryptionKey": {
+        "KeyId": /* Unique Identifier for this key. */
+        "PublicKey": /* BASE64 encoded public key specification. */
+        "Signature": /* The signature of this key, signed with the current verification key. */
+        "VerificationKeyId": /* The key id of the verification key used to sign the current public key. This must be the current verification key. */
+    }
 }
 ```
 

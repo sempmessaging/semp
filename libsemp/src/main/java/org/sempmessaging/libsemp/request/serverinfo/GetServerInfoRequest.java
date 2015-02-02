@@ -1,4 +1,4 @@
-package org.sempmessaging.libsemp.request.serverpublickeys;
+package org.sempmessaging.libsemp.request.serverinfo;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class GetServerPublicVerificationKeysRequest extends Request {
+public abstract class GetServerInfoRequest extends Request {
 	public static final String SERVER_PUBLIC_KEYS_JSON_IDENTIFIER = "ServerPublicVerificationKeys";
 
 	private ServerName serverName;
@@ -27,7 +27,7 @@ public abstract class GetServerPublicVerificationKeysRequest extends Request {
 		if(serverName == null) {
 			throw new IllegalStateException("serverName must not be null.");
 		}
-		GetServerPublicVerificationKeysRequestData requestData = new GetServerPublicVerificationKeysRequestData();
+		GetServerInfoRequestData requestData = new GetServerInfoRequestData();
 		requestData.setServerName(serverName);
 		return requestData;
 	}

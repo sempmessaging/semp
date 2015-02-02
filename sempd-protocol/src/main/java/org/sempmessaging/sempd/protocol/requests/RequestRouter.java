@@ -6,7 +6,7 @@ import net.davidtanzer.jevents.Event;
 import net.davidtanzer.jevents.EventComponent;
 import org.sempmessaging.sempd.protocol.requests.handler.RequestHandler;
 import org.sempmessaging.sempd.protocol.requests.handler.RequestHandlerRunner;
-import org.sempmessaging.sempd.protocol.requests.serverpublickeys.GetServerPublicVerificationKeysHandler;
+import org.sempmessaging.sempd.protocol.requests.serverinfo.GetServerInfoHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 public abstract class RequestRouter extends EventComponent {
 	private static final HashMap<String, Class<? extends RequestHandler>> handlersForKeys = new HashMap<String, Class<? extends RequestHandler>>() {{
-		put("GetServerPublicVerificationKeys", GetServerPublicVerificationKeysHandler.class);
+		put("GetServerInfo", GetServerInfoHandler.class);
 	}};
 	private Injector injector;
 

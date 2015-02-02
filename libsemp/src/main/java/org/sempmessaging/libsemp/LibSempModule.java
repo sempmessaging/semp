@@ -5,7 +5,7 @@ import org.sempmessaging.libsemp.connection.ConnectionListener;
 import org.sempmessaging.libsemp.connection.ConnectionRequests;
 import org.sempmessaging.libsemp.connection.ServerConnectionRequests;
 import org.sempmessaging.libsemp.io.MessageParser;
-import org.sempmessaging.libsemp.request.serverpublickeys.GetServerPublicVerificationKeysRequest;
+import org.sempmessaging.libsemp.request.serverinfo.GetServerInfoRequest;
 
 public class LibSempModule extends EventComponentModule {
 	@Override
@@ -14,6 +14,6 @@ public class LibSempModule extends EventComponentModule {
 
 		bindEventComponent(ConnectionListener.class);
 		bindEventComponent(MessageParser.class);
-		bindEventComponent(GetServerPublicVerificationKeysRequest.class);
+		bindEventComponent(GetServerInfoRequest.class);
 	}
 }
