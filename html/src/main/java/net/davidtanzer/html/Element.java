@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Element<T extends Element> extends BaseElement implements Node {
+public abstract class Element extends BaseElement implements Node {
 	private final List<Node> children = new ArrayList<>();
 
 	protected Element(final TagName tagName) {

@@ -34,6 +34,11 @@ public abstract class BaseElement {
 		setAttribute(AttributeName.of("class"), toCssClassString(this.cssClasses));
 	}
 
+	public void removeCssClass(final CssClass cssClass) {
+		this.cssClasses.remove(cssClass);
+		setAttribute(AttributeName.of("class"), toCssClassString(this.cssClasses));
+	}
+
 	private CssClass toCssClassString(final List<CssClass> cssClasses) {
 		StringBuilder resultBuilder = new StringBuilder();
 

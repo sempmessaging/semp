@@ -10,6 +10,7 @@ import net.davidtanzer.jevents.EventComponent;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.ui.event.EventHandler;
 import org.sempmessaging.sempc.ui.event.EventHandlerProvider;
+import org.sempmessaging.sempc.ui.event.EventHandlerTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,5 +81,9 @@ public abstract class HtmlComponent extends EventComponent {
 
 	protected EventHandlerScript eventHandler(final EventHandler eventHandler) {
 		return eventHandlerProvider.provideEventHandler(eventHandler);
+	}
+
+	protected EventHandlerTemplate eventHandlerTemplate(final EventHandler eventHandler) {
+		return eventHandlerProvider.provideEventHandlerTemplate(eventHandler);
 	}
 }

@@ -4,6 +4,7 @@ import com.google.inject.Singleton;
 import net.davidtanzer.html.values.EventHandlerScript;
 import org.sempmessaging.sempc.ui.event.EventHandler;
 import org.sempmessaging.sempc.ui.event.EventHandlerProvider;
+import org.sempmessaging.sempc.ui.event.EventHandlerTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,11 @@ public class JavaFxEventHandlerProvider implements EventHandlerProvider {
 		lastId++;
 		registeredEventHandlers.put(String.valueOf(lastId), eventHandler);
 		return new EventHandlerScript("eventHandlerProvider.onEvent(\'"+lastId+"\')");
+	}
+
+	@Override
+	public EventHandlerTemplate provideEventHandlerTemplate(final EventHandler eventHandler) {
+		return new EventHandlerTemplate("window.eventHandlerProvider.onEvent(\'"+lastId+"%s\');");
 	}
 
 	public void onEvent(final String eventId) {

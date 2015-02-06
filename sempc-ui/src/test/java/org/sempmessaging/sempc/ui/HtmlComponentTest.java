@@ -90,7 +90,7 @@ public class HtmlComponentTest {
 		when(ehp.provideEventHandler(any())).thenReturn(new EventHandlerScript("script"));
 		htmlComponent.setEventHandlerProvider(ehp);
 
-		EventHandlerScript eventHandlerScript = htmlComponent.eventHandler(() -> {
+		EventHandlerScript eventHandlerScript = htmlComponent.eventHandler((params) -> {
 		});
 
 		assertEquals(new EventHandlerScript("script"), eventHandlerScript);
