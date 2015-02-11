@@ -38,6 +38,10 @@ body {
 	border-color: #777;
 }
 
+.border-secondary {
+	border-color: #ccc;
+}
+
 .background-primary {
 	background: white;
 }
@@ -54,6 +58,10 @@ body {
 
 .icon-button:hover {
 	background: #777;
+}
+
+.list-item-selected {
+	background: #ddf;
 }
 
 .horizontal-split .first {
@@ -120,11 +128,6 @@ body {
 	display: inline;
 }
 
-.connection-status-panel .connection-status-icon {
-	width: 24px;
-	height: 24px;
-}
-
 .menu-overlay {
 	z-index: 100;
 
@@ -146,4 +149,36 @@ body {
 	border-right-width: 2px;
 
 	box-shadow: 2px 2px 3px #555;
+}
+
+.accounts-menu-list ul {
+	margin: 0;
+	padding: 0;
+}
+
+.accounts-menu-list li {
+	list-style: none;
+}
+
+.account-info {
+	margin-right: calc(24px + 0.5em);
+}
+
+.connection-status-icon {
+	width: 24px;
+	height: 24px;
+
+	float: right;
+}
+
+.accounts-menu-item {
+	padding: 0.5em 1em;
+	cursor: pointer;
+
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+.accounts-menu-item h3 {
+	margin: 0;
 }

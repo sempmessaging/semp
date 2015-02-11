@@ -3,6 +3,7 @@ package net.davidtanzer.html.query;
 import net.davidtanzer.html.Node;
 import net.davidtanzer.html.query.criteria.Criteria;
 import net.davidtanzer.html.query.criteria.IdCriteria;
+import net.davidtanzer.html.query.criteria.NodeTypeCriteria;
 import net.davidtanzer.html.values.AttributeName;
 import net.davidtanzer.html.values.Id;
 
@@ -47,6 +48,10 @@ public class Query {
 
 	public SingleQuery select(Id id) {
 		return new SingleQuery(this, new IdCriteria(id));
+	}
+
+	public Query select(final Class<? extends Node> nodeType) {
+		return new Query(this, new NodeTypeCriteria(nodeType));
 	}
 
 	private void visitRootNode(final List<Node> result, final Node rootNode) {

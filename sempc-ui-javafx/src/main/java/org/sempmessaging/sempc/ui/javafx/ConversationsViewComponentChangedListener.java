@@ -20,7 +20,12 @@ public class ConversationsViewComponentChangedListener implements ComponentChang
 		String contentString = render(newContent);
 		String escapedContentString = escapeStrings(contentString);
 
-		Platform.runLater(() -> conversationsView.engine().executeScript("document.getElementById(\"" + id + "\").innerHTML=\"" + escapedContentString + "\";"));
+		String script = "document.getElementById(\"" + id + "\").innerHTML=\"" + escapedContentString + "\";";
+		//System.out.println("Running script in webengine: "+script);
+
+		Platform.runLater(() -> {
+			conversationsView.engine().executeScript(script);
+		});
 	}
 
 	private String render(final Node[] nodes) {

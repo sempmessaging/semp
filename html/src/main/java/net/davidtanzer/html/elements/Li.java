@@ -5,7 +5,7 @@ import net.davidtanzer.html.values.TagName;
 
 public class Li extends Element {
 	public Li() {
-		super(TagName.of("div"));
+		super(TagName.of("li"));
 	}
 
 	public void add(final FlowContentNode... nodes) {

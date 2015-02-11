@@ -19,7 +19,8 @@ public abstract class Accounts extends EventComponent {
 					//e.printStackTrace();
 				}
 
-				//send(accountStatusChangedEvent()).accountStatusChanged(Arrays.asList(new AccountStatus(ConnectionStatus.CONNECTING)));
+				send(accountStatusChangedEvent()).accountStatusChanged(Arrays.asList(
+						new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("All"), new NumConversations(12), new NumUnreadConversations(1))));
 				try {
 					sleep(1000L);
 				} catch (InterruptedException e) {

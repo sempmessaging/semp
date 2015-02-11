@@ -27,7 +27,7 @@ public class JsEventTest {
 		public EventHandlerTemplate provideEventHandlerTemplate(final EventHandler eventHandler) {
 			nextId++;
 			eventHandlers.put(String.valueOf(nextId), eventHandler);
-			return new EventHandlerTemplate(String.valueOf(nextId)+"%s") {
+			return new EventHandlerTemplate("%s|"+String.valueOf(nextId)+"%s") {
 				@Override
 				protected void renderParameterToString(final StringBuilder paramsStringBuilder, final String param) {
 					paramsStringBuilder.append(param);
@@ -46,7 +46,7 @@ public class JsEventTest {
 
 	private Object handleJsEvent(final AttributeValue value) {
 		if(value != null) {
-			String eventHandlerValue = value.value();
+			String eventHandlerValue = value.value().substring(value.value().indexOf("|")+1);
 			String[] eventHandlerParts = eventHandlerValue.split(", ");
 			String eventHandlerId = eventHandlerParts[0];
 

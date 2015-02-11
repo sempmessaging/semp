@@ -15,11 +15,16 @@ public class EventHandlerTemplate {
 			paramsStringBuilder.append(", ");
 			renderParameterToString(paramsStringBuilder, param);
 		}
-		String script = String.format(pattern, paramsStringBuilder.toString());
+		String numParams = "";
+		if(params.length > 0) {
+			numParams = Integer.toString(params.length);
+		}
+		String script = String.format(pattern, numParams, paramsStringBuilder.toString());
+
 		return new EventHandlerScript(script);
 	}
 
 	protected void renderParameterToString(final StringBuilder paramsStringBuilder, final String param) {
-		paramsStringBuilder.append("\\\"").append(param).append("\\\"");
+		paramsStringBuilder.append("\'").append(param).append("\'");
 	}
 }

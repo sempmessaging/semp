@@ -2,6 +2,7 @@ package net.davidtanzer.html.query;
 
 import net.davidtanzer.html.Node;
 import net.davidtanzer.html.query.criteria.Criteria;
+import net.davidtanzer.html.query.criteria.NodeTypeCriteria;
 import net.davidtanzer.html.values.AttributeName;
 
 import java.util.List;

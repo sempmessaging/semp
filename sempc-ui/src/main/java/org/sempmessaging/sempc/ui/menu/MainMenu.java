@@ -10,13 +10,14 @@ import net.davidtanzer.jevents.Event;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.ui.HtmlComponent;
 import org.sempmessaging.sempc.ui.connection.ConnectionStatusPanel;
+import org.sempmessaging.sempc.ui.menu.accounts.AccountsMenuComponent;
 
 public abstract class MainMenu extends HtmlComponent {
 	private MainMenuButton mainMenuButton;
-	private ConnectionStatusPanel connectionStatusPanel;
 
 	private Div menuContainerDiv;
 	private MainMenuCloseButton mainMenuCloseButton;
+	private AccountsMenuComponent accountsMenuComponent;
 
 	@Event
 	public abstract ShowMainMenuEvent showMainMenuEvent();
@@ -43,12 +44,20 @@ public abstract class MainMenu extends HtmlComponent {
 		accountsHeadline.add(new TextNode("Accounts"));
 		header.add(accountsHeadline);
 
-		header.add(connectionStatusPanel.getHtml());
-
 		Div content = new Div();
 		content.cssClasses(new CssClass("panel-content"), new CssClass("background-primary"));
 
+		content.add(accountsMenuComponent.getHtml());
+
 		menuContainerDiv.add(header, content);
+	}
+
+	@Inject
+	public void setAccountsMenuComponent(final AccountsMenuComponent accountsMenuComponent) {
+		Args.notNull(accountsMenuComponent, "accountsMenuComponent");
+		Args.setOnce(this.accountsMenuComponent, "accountsMenuComponent");
+
+		this.accountsMenuComponent = accountsMenuComponent;
 	}
 
 	@Inject
@@ -58,14 +67,6 @@ public abstract class MainMenu extends HtmlComponent {
 
 		mainMenuCloseButton.subscribe(mainMenuCloseButton.buttonClickedEvent(), () -> send(showMainMenuEvent()).showMainMenu(false));
 		this.mainMenuCloseButton = mainMenuCloseButton;
-	}
-
-	@Inject
-	public void setConnectionStatusPanel(final ConnectionStatusPanel connectionStatusPanel) {
-		Args.notNull(connectionStatusPanel, "connectionStatusPanel");
-		Args.setOnce(this.connectionStatusPanel, "connectionStatusPanel");
-
-		this.connectionStatusPanel = connectionStatusPanel;
 	}
 
 	@Inject

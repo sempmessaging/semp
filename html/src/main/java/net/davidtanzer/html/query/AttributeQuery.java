@@ -20,6 +20,7 @@ public class AttributeQuery {
 
 	public AttributeValue from(final Node node) {
 		Node nodeToProcess = node;
+
 		if(baseQuery != null) {
 			nodeToProcess = baseQuery.from(node);
 		}

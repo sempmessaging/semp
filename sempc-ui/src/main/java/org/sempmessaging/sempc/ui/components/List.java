@@ -20,11 +20,14 @@ public abstract class List<T> extends HtmlComponent {
 	private EventHandlerTemplate eventTemplate;
 
 	private final ArrayList<T> listContentItems = new ArrayList<>();
-	private final ArrayList<Li> listItems = new ArrayList<>();
-	private Li selectedItem;
+	private int selectedItemPosition = -1;
 
 	@Event
 	public abstract ItemSelectedEvent<T> itemSelectedEvent();
+
+	public List() {
+		cssClass(new CssClass("items-list"));
+	}
 
 	public void setListContent(final Property<? extends Iterable<T>> listContent) {
 		Args.notNull(listContent, "listContent");
@@ -43,20 +46,24 @@ public abstract class List<T> extends HtmlComponent {
 	}
 
 	private void reInitializeList() {
+		list.removeAllChildren();
 		listContentItems.clear();
-		listItems.clear();
-		selectedItem = null;
 
+		int itemPosition = 0;
 		for(T contentItem : listContent.get()) {
 			listContentItems.add(contentItem);
 
 			Li li = new Li();
-			listItems.add(li);
+
+			if(itemPosition == selectedItemPosition) {
+				li.cssClasses(new CssClass("list-item-selected"));
+			}
 
 			li.add(listItemRenderer.render(contentItem).getHtml());
 			li.events().onClick(eventTemplate.eventHandlerScript(Integer.toString(listContentItems.size()-1)));
 
 			list.add(li);
+			itemPosition++;
 		}
 	}
 
@@ -72,11 +79,7 @@ public abstract class List<T> extends HtmlComponent {
 
 		int clickedItemPosition = Integer.parseInt(params[0]);
 
-		if(selectedItem != null) {
-			selectedItem.removeCssClass(new CssClass("list-item-selected"));
-		}
-		selectedItem = listItems.get(clickedItemPosition);
-		selectedItem.cssClasses(new CssClass("list-item-selected"));
+		selectedItemPosition = clickedItemPosition;
 		componentChanged();
 
 		T clickedItem = listContentItems.get(clickedItemPosition);

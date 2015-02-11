@@ -11,7 +11,7 @@ public class EventHandlerTemplateTest {
 
 	@Before
 	public void setup() {
-		template = new EventHandlerTemplate("test(1%s)");
+		template = new EventHandlerTemplate("test%s(1%s)");
 	}
 
 	@Test
@@ -25,13 +25,13 @@ public class EventHandlerTemplateTest {
 	public void oneParameterCreatesParametrizedCalls() {
 		EventHandlerScript script = template.eventHandlerScript("foo");
 
-		assertEquals("test(1, \\\"foo\\\")", script.value());
+		assertEquals("test1(1, 'foo')", script.value());
 	}
 
 	@Test
 	public void multipleParametersCreatesParametrizedCalls() {
 		EventHandlerScript script = template.eventHandlerScript("foo", "bar");
 
-		assertEquals("test(1, \\\"foo\\\", \\\"bar\\\")", script.value());
+		assertEquals("test2(1, 'foo', 'bar')", script.value());
 	}
 }
