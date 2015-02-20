@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.sempmessaging.sempc.core.account.AccountStatus;
-import org.sempmessaging.sempc.core.account.AccountStatusChangedEvent;
+import org.sempmessaging.sempc.core.account.AccountsStatusChangedEvent;
 import org.sempmessaging.sempc.core.account.Accounts;
 
 import java.util.Arrays;
@@ -16,7 +16,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class AccountsMenuComponentViewModelTest {
 	private AccountsMenuComponentViewModel viewModel;
@@ -31,8 +30,8 @@ public class AccountsMenuComponentViewModelTest {
 	public void updatesAccountStatusesPropertyWhenAccountsChange() {
 		Accounts accounts = mock(Accounts.class);
 		viewModel.setAccounts(accounts);
-		ArgumentCaptor<AccountStatusChangedEvent> eventHandlerCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
-		verify(accounts).subscribe(any(AccountStatusChangedEvent.class), eventHandlerCaptor.capture());
+		ArgumentCaptor<AccountsStatusChangedEvent> eventHandlerCaptor = ArgumentCaptor.forClass(AccountsStatusChangedEvent.class);
+		verify(accounts).subscribe(any(AccountsStatusChangedEvent.class), eventHandlerCaptor.capture());
 
 		AccountStatus accountStatus = mock(AccountStatus.class);
 		eventHandlerCaptor.getValue().accountStatusChanged(Arrays.asList(accountStatus));

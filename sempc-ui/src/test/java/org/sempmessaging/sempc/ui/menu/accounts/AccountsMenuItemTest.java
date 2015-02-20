@@ -7,6 +7,10 @@ import net.davidtanzer.html.elements.Strong;
 import org.junit.Before;
 import org.junit.Test;
 import org.sempmessaging.sempc.core.account.*;
+import org.sempmessaging.sempc.core.account.value.AccountName;
+import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
+import org.sempmessaging.sempc.core.account.value.NumConversations;
+import org.sempmessaging.sempc.core.account.value.NumUnreadConversations;
 
 import java.util.List;
 

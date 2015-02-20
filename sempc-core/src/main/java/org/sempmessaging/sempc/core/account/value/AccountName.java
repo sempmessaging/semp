@@ -1,4 +1,4 @@
-package org.sempmessaging.sempc.core.account;
+package org.sempmessaging.sempc.core.account.value;
 
 import net.davidtanzer.value.StringValue;
 

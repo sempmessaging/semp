@@ -1,34 +1,61 @@
 package org.sempmessaging.sempc.core.account;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import net.davidtanzer.jevents.Event;
 import net.davidtanzer.jevents.EventComponent;
+import org.sempmessaging.libsemp.arguments.Args;
+import org.sempmessaging.sempc.core.account.config.AccountConfiguration;
+import org.sempmessaging.sempc.core.account.config.AccountConfigurationRepository;
+import org.sempmessaging.sempc.core.account.value.AccountName;
 
-import java.util.Arrays;
+import java.util.*;
 
 public abstract class Accounts extends EventComponent {
+	private AccountConfigurationRepository accountConfigurationRepository;
+	private Provider<Account> accountProvider;
+	private Map<AccountName, AccountStatus> accountStatuses = new HashMap<>();
+
 	@Event
-	public abstract AccountStatusChangedEvent accountStatusChangedEvent();
+	public abstract AccountsStatusChangedEvent accountsStatusChangedEvent();
 
 	public void connect() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					sleep(1000L);
-				} catch (InterruptedException e) {
-					//e.printStackTrace();
-				}
+		assert accountConfigurationRepository != null : "Configuration repository must be set by dependency injection or test setup.";
+		List<AccountConfiguration> accountConfigurations = accountConfigurationRepository.listAll();
+		assert accountConfigurations != null : "The configuration repository never returns a null list";
 
-				send(accountStatusChangedEvent()).accountStatusChanged(Arrays.asList(
-						new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("All"), new NumConversations(12), new NumUnreadConversations(1))));
-				try {
-					sleep(1000L);
-				} catch (InterruptedException e) {
-					//e.printStackTrace();
-				}
+		accountConfigurations.forEach((config) -> {
+			assert accountProvider != null : "Account provider must be set by dependency injection or test setup.";
+			Account account = accountProvider.get();
+			assert account != null : "Account provider always returns a valid account.";
 
-				//send(accountStatusChangedEvent()).accountStatusChanged(Arrays.asList(new AccountStatus(ConnectionStatus.CONNECTED)));
-			}
-		}.start();
+			account.subscribe(account.accountStatusChanged(), this::someAccountStatusChanged);
+			account.connect();
+		});
+	}
+
+	private void someAccountStatusChanged(AccountStatus accountStatus) {
+		accountStatuses.put(accountStatus.accountName(), accountStatus);
+
+		List<AccountStatus> statuses = new ArrayList<>();
+		statuses.addAll(accountStatuses.values());
+
+		send(accountsStatusChangedEvent()).accountStatusChanged(statuses);
+	}
+
+	@Inject
+	public void setAccountConfigurationRepository(final AccountConfigurationRepository accountConfigurationRepository) {
+		Args.notNull(accountConfigurationRepository, "accountConfigurationRepository");
+		Args.setOnce(this.accountConfigurationRepository, "accountConfigurationRepository");
+
+		this.accountConfigurationRepository = accountConfigurationRepository;
+	}
+
+	@Inject
+	public void setAccountProvider(final Provider<Account> accountProvider) {
+		Args.notNull(accountProvider, "accountProvider");
+		Args.setOnce(this.accountProvider, "accountProvider");
+
+		this.accountProvider = accountProvider;
 	}
 }

@@ -1,19 +1,13 @@
 package org.sempmessaging.sempc.ui.connection;
 
 import com.google.inject.Inject;
-import net.davidtanzer.html.TextNode;
-import net.davidtanzer.html.elements.Div;
 import net.davidtanzer.html.elements.FlowContentNode;
 import net.davidtanzer.html.elements.Img;
 import net.davidtanzer.html.elements.values.ImageSrc;
 import net.davidtanzer.html.values.CssClass;
-import net.davidtanzer.html.values.CssStyle;
-import net.davidtanzer.html.values.EventHandlerScript;
 import org.sempmessaging.libsemp.arguments.Args;
-import org.sempmessaging.sempc.core.account.AccountStatus;
-import org.sempmessaging.sempc.core.account.ConnectionStatus;
+import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
 import org.sempmessaging.sempc.ui.HtmlComponent;
-import org.sempmessaging.sempc.ui.event.EventHandler;
 import org.sempmessaging.sempc.ui.viewmodel.Property;
 
 import java.util.HashMap;

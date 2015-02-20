@@ -6,7 +6,7 @@ import net.davidtanzer.html.elements.values.ImageSrc;
 import net.davidtanzer.html.values.CssClass;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.core.account.AccountStatus;
-import org.sempmessaging.sempc.core.account.ConnectionStatus;
+import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
 import org.sempmessaging.sempc.ui.HtmlComponent;
 
 import java.util.HashMap;

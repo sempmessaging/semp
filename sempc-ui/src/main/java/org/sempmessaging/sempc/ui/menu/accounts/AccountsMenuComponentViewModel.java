@@ -15,7 +15,7 @@ public abstract class AccountsMenuComponentViewModel extends AbstractViewModel {
 	@Inject
 	public void setAccounts(final Accounts accounts) {
 		Args.notNull(accounts, "accounts");
-		accounts.subscribe(accounts.accountStatusChangedEvent(), this::updateAccountStatuses);
+		accounts.subscribe(accounts.accountsStatusChangedEvent(), this::updateAccountStatuses);
 
 		//overallConnectionStatus.set(ConnectionStatus.UNKNOWN);
 	}

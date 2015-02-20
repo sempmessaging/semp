@@ -1,7 +1,10 @@
 package org.sempmessaging.sempc.core.account;
 
-import net.davidtanzer.value.StringValue;
 import org.sempmessaging.libsemp.arguments.Args;
+import org.sempmessaging.sempc.core.account.value.AccountName;
+import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
+import org.sempmessaging.sempc.core.account.value.NumConversations;
+import org.sempmessaging.sempc.core.account.value.NumUnreadConversations;
 
 public class AccountStatus {
 	private final ConnectionStatus connectionStatus;

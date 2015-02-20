@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.core.account.AccountStatus;
 import org.sempmessaging.sempc.core.account.Accounts;
-import org.sempmessaging.sempc.core.account.ConnectionStatus;
+import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
 import org.sempmessaging.sempc.ui.viewmodel.AbstractViewModel;
 import org.sempmessaging.sempc.ui.viewmodel.Property;
 
@@ -17,7 +17,7 @@ public abstract class ConnectionStatusViewModel extends AbstractViewModel {
 	@Inject
 	public void setAccounts(final Accounts accounts) {
 		Args.notNull(accounts, "accounts");
-		accounts.subscribe(accounts.accountStatusChangedEvent(), this::updateAccountStatuses);
+		accounts.subscribe(accounts.accountsStatusChangedEvent(), this::updateAccountStatuses);
 
 		overallConnectionStatus.set(ConnectionStatus.UNKNOWN);
 	}
