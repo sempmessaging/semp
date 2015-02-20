@@ -8,6 +8,9 @@ import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.core.account.config.AccountConfiguration;
 import org.sempmessaging.sempc.core.account.config.AccountConfigurationRepository;
 import org.sempmessaging.sempc.core.account.value.AccountName;
+import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
+import org.sempmessaging.sempc.core.account.value.NumConversations;
+import org.sempmessaging.sempc.core.account.value.NumUnreadConversations;
 
 import java.util.*;
 
@@ -39,8 +42,45 @@ public abstract class Accounts extends EventComponent {
 
 		List<AccountStatus> statuses = new ArrayList<>();
 		statuses.addAll(accountStatuses.values());
+		Collections.sort(statuses, (a, b) -> a.accountName().value().compareTo(b.accountName().value()));
+
+		gatherConsolidatedStatusIfNecessary(statuses);
 
 		send(accountsStatusChangedEvent()).accountStatusChanged(statuses);
+	}
+
+	private void gatherConsolidatedStatusIfNecessary(List<AccountStatus> statuses) {
+		if(statuses.size() > 1) {
+			AccountStatus allAccountsStatus = gatherConsolidatedStatusOfAllAccounts(statuses);
+			statuses.add(0, allAccountsStatus);
+		}
+	}
+
+	private AccountStatus gatherConsolidatedStatusOfAllAccounts(List<AccountStatus> statuses) {
+		int numConversations = 0;
+		int numUnreadConversations = 0;
+		ConnectionStatus connectionStatus = ConnectionStatus.CONNECTED;
+
+		for (AccountStatus status : statuses) {
+			numConversations += status.numConversations().value();
+			numUnreadConversations += status.numUnreadConversations().value();
+			connectionStatus = computeNewConnectionStatus(connectionStatus, status);
+		}
+
+		return new AccountStatus(connectionStatus, new AccountName("All"), new NumConversations(numConversations), new NumUnreadConversations(numUnreadConversations));
+	}
+
+	private ConnectionStatus computeNewConnectionStatus(ConnectionStatus connectionStatus, AccountStatus status) {
+		if(status.connectionStatus() == ConnectionStatus.ERROR) {
+			connectionStatus = ConnectionStatus.ERROR;
+		}
+		if(connectionStatus != connectionStatus.ERROR && status.connectionStatus()==ConnectionStatus.UNKNOWN) {
+			connectionStatus = ConnectionStatus.UNKNOWN;
+		}
+		if(connectionStatus != ConnectionStatus.ERROR && connectionStatus != ConnectionStatus.UNKNOWN && status.connectionStatus()==ConnectionStatus.CONNECTING) {
+			connectionStatus = ConnectionStatus.CONNECTING;
+		}
+		return connectionStatus;
 	}
 
 	@Inject

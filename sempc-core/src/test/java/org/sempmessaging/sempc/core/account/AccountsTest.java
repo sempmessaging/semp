@@ -17,7 +17,10 @@ import org.sempmessaging.sempc.core.account.value.NumUnreadConversations;
 
 import java.util.Arrays;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeNotNull;
+import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -120,7 +123,7 @@ public class AccountsTest {
 	}
 
 	@Test
-	public void accountsStatusChangedEventContainsCummulatedStatusForAllAccounts() {
+	public void accountsStatusChangedEventContainsConsolidatedStatusForAllAccounts() {
 		AccountConfiguration accountConfig = mock(AccountConfiguration.class);
 		when(configRepo.listAll()).thenReturn(Arrays.asList(accountConfig));
 		Account account = mock(Account.class);
@@ -138,9 +141,139 @@ public class AccountsTest {
 			AccountStatus allAccountsStatus = statusList.get(0);
 			assertNotNull(allAccountsStatus);
 			assertEquals(new AccountName("All"), allAccountsStatus.accountName());
-			assertEquals(ConnectionStatus.CONNECTING, allAccountsStatus.connectionStatus());
 			assertEquals(new NumConversations(12), allAccountsStatus.numConversations());
 			assertEquals(new NumUnreadConversations(3), allAccountsStatus.numUnreadConversations());
+		});
+		subscriberCaptor.getValue().accountStatusChanged(accountStatus);
+	}
+
+
+	@Test
+	public void accountsStatusChangedEventDoesNotContainConsolidatedStatusIfThereIsOnlyOneAccount() {
+		AccountConfiguration accountConfig = mock(AccountConfiguration.class);
+		when(configRepo.listAll()).thenReturn(Arrays.asList(accountConfig));
+		Account account = mock(Account.class);
+		when(accountProvider.get()).thenReturn(account);
+
+		accounts.connect();
+
+		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
+		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
+
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test"), new NumConversations(5), new NumUnreadConversations(2));
+		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
+			assertEquals(1, statusList.size());
+			AccountStatus allAccountsStatus = statusList.get(0);
+			assertNotNull(allAccountsStatus);
+			assertNotEquals(new AccountName("All"), allAccountsStatus.accountName());
+		});
+		subscriberCaptor.getValue().accountStatusChanged(accountStatus);
+	}
+
+	@Test
+	public void overallConnectionStatusIsErrorWhenOneConnectionIsInError() {
+		AccountConfiguration accountConfig = mock(AccountConfiguration.class);
+		when(configRepo.listAll()).thenReturn(Arrays.asList(accountConfig));
+		Account account = mock(Account.class);
+		when(accountProvider.get()).thenReturn(account);
+
+		accounts.connect();
+
+		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
+		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
+
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.UNKNOWN, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.ERROR, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
+			AccountStatus allAccountsStatus = statusList.get(0);
+			assumeNotNull(allAccountsStatus);
+			assumeThat(allAccountsStatus.accountName(), is(new AccountName("All")));
+
+			assertEquals(ConnectionStatus.ERROR, allAccountsStatus.connectionStatus());
+		});
+		subscriberCaptor.getValue().accountStatusChanged(accountStatus);
+	}
+
+	@Test
+	public void overallConnectionStatusIsUnknownWhenOneConnectionIsInUnknownAndThereIsNoError() {
+		AccountConfiguration accountConfig = mock(AccountConfiguration.class);
+		when(configRepo.listAll()).thenReturn(Arrays.asList(accountConfig));
+		Account account = mock(Account.class);
+		when(accountProvider.get()).thenReturn(account);
+
+		accounts.connect();
+
+		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
+		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
+
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.UNKNOWN, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
+			AccountStatus allAccountsStatus = statusList.get(0);
+			assumeNotNull(allAccountsStatus);
+			assumeThat(allAccountsStatus.accountName(), is(new AccountName("All")));
+
+			assertEquals(ConnectionStatus.UNKNOWN, allAccountsStatus.connectionStatus());
+		});
+		subscriberCaptor.getValue().accountStatusChanged(accountStatus);
+	}
+
+	@Test
+	public void overallConnectionStatusIsConnectingWhenOneConnectionIsInConnectingAndThereIsNoErrorOrUnknownStatus() {
+		AccountConfiguration accountConfig = mock(AccountConfiguration.class);
+		when(configRepo.listAll()).thenReturn(Arrays.asList(accountConfig));
+		Account account = mock(Account.class);
+		when(accountProvider.get()).thenReturn(account);
+
+		accounts.connect();
+
+		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
+		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
+
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
+			AccountStatus allAccountsStatus = statusList.get(0);
+			assumeNotNull(allAccountsStatus);
+			assumeThat(allAccountsStatus.accountName(), is(new AccountName("All")));
+
+			assertEquals(ConnectionStatus.CONNECTING, allAccountsStatus.connectionStatus());
+		});
+		subscriberCaptor.getValue().accountStatusChanged(accountStatus);
+	}
+
+	@Test
+	public void overallConnectionStatusIsConnectedWhenAllConnectionsAreConnected() {
+		AccountConfiguration accountConfig = mock(AccountConfiguration.class);
+		when(configRepo.listAll()).thenReturn(Arrays.asList(accountConfig));
+		Account account = mock(Account.class);
+		when(accountProvider.get()).thenReturn(account);
+
+		accounts.connect();
+
+		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
+		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
+
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
+			AccountStatus allAccountsStatus = statusList.get(0);
+			assumeNotNull(allAccountsStatus);
+			assumeThat(allAccountsStatus.accountName(), is(new AccountName("All")));
+
+			assertEquals(ConnectionStatus.CONNECTED, allAccountsStatus.connectionStatus());
 		});
 		subscriberCaptor.getValue().accountStatusChanged(accountStatus);
 	}
