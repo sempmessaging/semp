@@ -1,4 +1,22 @@
 apply plugin: 'java'
+apply plugin: 'idea'
+
+configurations {
+    provided
+    provided.extendsFrom(compile)
+}
+
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
 
 dependencies {
 	compile project(':semp:jevents')
@@ -6,4 +24,8 @@ dependencies {
 	compile project(':semp:libsemp')
 	compile project(':semp:libsemp-core')
 	compile project(':semp:sempc-core')
+    provided 'com.google.inject:guice:3.0'
+
+    testCompile project(':semp:jevents-cg')
+    testCompile project(':semp:jevents-testing')
 }

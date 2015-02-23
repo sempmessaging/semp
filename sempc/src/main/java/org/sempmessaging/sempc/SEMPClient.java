@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.sempmessaging.sempc.connect.SempcConnectModule;
 import org.sempmessaging.sempc.core.SempcCoreModule;
 import org.sempmessaging.sempc.core.account.Accounts;
 import org.sempmessaging.sempc.ui.SempcUiModule;
@@ -19,7 +20,7 @@ public class SEMPClient extends Application {
 	private final Injector injector;
 
 	public SEMPClient() {
-		injector = Guice.createInjector(new JavaFxUiModule(), new SempcCoreModule(), new SempcUiModule(), new SempClientModule());
+		injector = Guice.createInjector(new JavaFxUiModule(), new SempcCoreModule(), new SempcUiModule(), new SempcConnectModule(), new SempClientModule());
 	}
 
 	@Override

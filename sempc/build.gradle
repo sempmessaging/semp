@@ -3,6 +3,8 @@ apply plugin: 'idea'
 
 dependencies {
 	compile project(':semp:jevents-cg')
-	compile project(':semp:sempc-ui-javafx')
+    compile project(':semp:sempc-ui-javafx')
+    compile project(':semp:sempc-connect')
+    compile project(':semp:sempc-persistence-fs')
 	compile 'com.google.inject:guice:3.0'
 }
