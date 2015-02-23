@@ -33,7 +33,7 @@ public abstract class Accounts extends EventComponent {
 			assert account != null : "Account provider always returns a valid account.";
 
 			account.subscribe(account.accountStatusChanged(), this::someAccountStatusChanged);
-			account.connect();
+			account.connect(config);
 		});
 	}
 

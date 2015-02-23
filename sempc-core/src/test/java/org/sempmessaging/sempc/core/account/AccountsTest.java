@@ -22,6 +22,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assume.assumeNotNull;
 import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -73,7 +74,7 @@ public class AccountsTest {
 
 		accounts.connect();
 
-		verify(account).connect();
+		verify(account).connect(eq(accountConfig));
 	}
 
 	@Test
