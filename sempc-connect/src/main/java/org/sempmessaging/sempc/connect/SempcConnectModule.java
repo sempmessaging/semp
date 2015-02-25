@@ -8,6 +8,6 @@ import org.sempmessaging.sempc.core.account.AccountConnection;
 public class SempcConnectModule extends EventComponentModule {
 	@Override
 	protected void configure() {
-		bind(AccountConnection.class).to(LibSempAccountConnection.class).in(Scopes.SINGLETON);
+		bindEventComponent(LibSempAccountConnection.class);
 	}
 }
