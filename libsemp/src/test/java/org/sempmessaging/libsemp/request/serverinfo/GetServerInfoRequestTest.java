@@ -68,7 +68,7 @@ public class GetServerInfoRequestTest {
 	@Test
 	public void processResponseReportsAnErrorWhenServerSendsNoKeys() {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>() {{
-			put("ServerPublicKeys", new ArrayList<>());
+			put(GetServerInfoRequest.SERVER_PUBLIC_VERIFICATION_KEYS_JSON_IDENTIFIER, new ArrayList<>());
 		}};
 
 		eventTestRule.subscribeMandatory(request, request.errorDuringRequest(), (e) -> assertNotNull(e));
@@ -77,17 +77,18 @@ public class GetServerInfoRequestTest {
 
 	@Test
 	public void processResponseSendsTwoPublicKeysWhenTheServerProvidesTheKeys() {
-		Map<String, Object> jsonResponse = preparePublicKeysResponse();
+		Map<String, Object> jsonResponse = prepareServerInfoResponse();
 
-		eventTestRule.subscribeMandatory(request, request.publicKeysReceivedEvent(), (keys) -> assertEquals(2, keys.size()));
+		eventTestRule.subscribeMandatory(request, request.serverInformationReceivedEvent(), (serverInfo) -> assertEquals(2, serverInfo.publicKeys().size()));
 		request.processResponse(jsonResponse);
 	}
 
 	@Test
 	public void processResponseSendsCorrectPublicKeysWhenTheServerProvidesTheKeys() {
-		Map<String, Object> jsonResponse = preparePublicKeysResponse();
+		Map<String, Object> jsonResponse = prepareServerInfoResponse();
 
-		eventTestRule.subscribeMandatory(request, request.publicKeysReceivedEvent(), (keys) -> {
+		eventTestRule.subscribeMandatory(request, request.serverInformationReceivedEvent(), (serverInfo) -> {
+			List<PublicVerificationKey> keys = serverInfo.publicKeys();
 			assumeThat(keys.size(), is(2));
 
 			assertKeyIs(keys.get(0), "KeyId1", "PublicKeyData1", "KeyId2");
@@ -112,9 +113,9 @@ public class GetServerInfoRequestTest {
 		assertEquals(SingleValue.empty(Signature.class), key.signature());
 	}
 
-	private Map<String, Object> preparePublicKeysResponse() {
+	private Map<String, Object> prepareServerInfoResponse() {
 		return new HashMap<String, Object>() {{
-			put(GetServerInfoRequest.SERVER_PUBLIC_KEYS_JSON_IDENTIFIER,  preparePublicKeysList());
+			put(GetServerInfoRequest.SERVER_PUBLIC_VERIFICATION_KEYS_JSON_IDENTIFIER,  preparePublicKeysList());
 		}};
 	}
 

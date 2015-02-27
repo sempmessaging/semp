@@ -8,19 +8,21 @@ import org.sempmessaging.libsemp.key.PublicVerificationKey;
 import org.sempmessaging.libsemp.key.translator.JsonMapToPublicVerificationKeyTranslator;
 import org.sempmessaging.libsemp.request.Request;
 import org.sempmessaging.libsemp.request.RequestData;
+import org.sempmessaging.libsemp.server.ServerInformation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class GetServerInfoRequest extends Request {
-	public static final String SERVER_PUBLIC_KEYS_JSON_IDENTIFIER = "ServerPublicVerificationKeys";
+	public static final String SERVER_PUBLIC_VERIFICATION_KEYS_JSON_IDENTIFIER = "ServerPublicVerificationKeys";
+	public static final String SERVER_PUBLIC_ENCRYPTION_KEY_IDENTIFIER = "ServerPublicEncryptionKey";
 
 	private ServerName serverName;
 	private Provider<JsonMapToPublicVerificationKeyTranslator> keyTranslatorProvider;
 
 	@Event
-	public abstract PublicKeysReceivedEvent publicKeysReceivedEvent();
+	public abstract ServerInformationReceivedEvent serverInformationReceivedEvent();
 
 	@Override
 	protected RequestData createRequestData() {
@@ -38,8 +40,10 @@ public abstract class GetServerInfoRequest extends Request {
 
 		if(responseContainsKeysList(jsonResponse) && keysListContainsKeys(jsonResponse)) {
 			try {
-				List<PublicVerificationKey> keysList = createKeysListFrom((List) jsonResponse.get(SERVER_PUBLIC_KEYS_JSON_IDENTIFIER));
-				send(publicKeysReceivedEvent()).publicKeysReceived(keysList);
+				List<PublicVerificationKey> keysList = createKeysListFrom((List) jsonResponse.get(SERVER_PUBLIC_VERIFICATION_KEYS_JSON_IDENTIFIER));
+
+				ServerInformation serverInformation = new ServerInformation(keysList);
+				send(serverInformationReceivedEvent()).serverInformationReceived(serverInformation);
 			} catch(KeyListContainsNonMapData e) {
 				send(errorDuringRequest()).error(e);
 			}
@@ -63,12 +67,12 @@ public abstract class GetServerInfoRequest extends Request {
 	}
 
 	private boolean keysListContainsKeys(final Map<String, Object> jsonResponse) {
-		return ((List) jsonResponse.get(SERVER_PUBLIC_KEYS_JSON_IDENTIFIER)).size() > 0;
+		return ((List) jsonResponse.get(SERVER_PUBLIC_VERIFICATION_KEYS_JSON_IDENTIFIER)).size() > 0;
 	}
 
 	private boolean responseContainsKeysList(final Map<String, Object> jsonResponse) {
-		return jsonResponse.containsKey(SERVER_PUBLIC_KEYS_JSON_IDENTIFIER) &&
-				jsonResponse.get(SERVER_PUBLIC_KEYS_JSON_IDENTIFIER) instanceof List<?>;
+		return jsonResponse.containsKey(SERVER_PUBLIC_VERIFICATION_KEYS_JSON_IDENTIFIER) &&
+				jsonResponse.get(SERVER_PUBLIC_VERIFICATION_KEYS_JSON_IDENTIFIER) instanceof List<?>;
 	}
 
 	public void requestKeysForServer(final ServerName serverName) {

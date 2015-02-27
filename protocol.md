@@ -22,6 +22,8 @@ The public verification keys can only be used to verify the signatures of other 
 
 The client can (and should) ask his "own" server for public keys of other servers.
 
+The client can (and should) cache this information. We recomment that the client should cache this information for at least 24 hours. It has to fetch the again when the server does not accept the encryption key anymore - the information cannot be cached longer than this.
+
 **Client:**
 ```
 {

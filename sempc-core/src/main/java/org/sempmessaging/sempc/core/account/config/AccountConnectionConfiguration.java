@@ -1,11 +1,15 @@
 package org.sempmessaging.sempc.core.account.config;
 
+import net.davidtanzer.value.SingleValue;
+import org.sempmessaging.sempc.core.account.config.value.HostName;
+import org.sempmessaging.sempc.core.account.config.value.Port;
+
 public class AccountConnectionConfiguration {
-	public String host() {
-		return null;
+	public HostName host() {
+		return SingleValue.empty(HostName.class);
 	}
 
-	public int port() {
-		return 0;
+	public Port port() {
+		return SingleValue.empty(Port.class);
 	}
 }

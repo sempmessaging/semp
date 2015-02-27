@@ -77,7 +77,7 @@ public class GetServerInfoTest {
 		GetServerInfoRequest request = serverConnection.newRequest(GetServerInfoRequest.class);
 		request.requestKeysForServer(new ServerName("example.com"));
 
-		eventTestRule.subscribeMandatory(request, request.publicKeysReceivedEvent(), (keys) -> {
+		eventTestRule.subscribeMandatory(request, request.serverInformationReceivedEvent(), (keys) -> {
 			assertNotNull(keys);
 		});
 		request.start();
