@@ -7,10 +7,7 @@ import net.davidtanzer.html.elements.Strong;
 import org.junit.Before;
 import org.junit.Test;
 import org.sempmessaging.sempc.core.account.*;
-import org.sempmessaging.sempc.core.account.value.AccountName;
-import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
-import org.sempmessaging.sempc.core.account.value.NumConversations;
-import org.sempmessaging.sempc.core.account.value.NumUnreadConversations;
+import org.sempmessaging.sempc.core.account.value.*;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class AccountsMenuItemTest {
 
 	@Before
 	public void setup() {
-		accountStatus = new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("Name"), new NumConversations(5), new NumUnreadConversations(2));
+		accountStatus = new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("Name"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage(""));
 		accountsMenuItem = new AccountsMenuItem(accountStatus);
 	}
 

@@ -4,13 +4,11 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import net.davidtanzer.jevents.Event;
 import net.davidtanzer.jevents.EventComponent;
+import net.davidtanzer.value.SingleValue;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempc.core.account.config.AccountConfiguration;
 import org.sempmessaging.sempc.core.account.config.AccountConfigurationRepository;
-import org.sempmessaging.sempc.core.account.value.AccountName;
-import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
-import org.sempmessaging.sempc.core.account.value.NumConversations;
-import org.sempmessaging.sempc.core.account.value.NumUnreadConversations;
+import org.sempmessaging.sempc.core.account.value.*;
 
 import java.util.*;
 
@@ -67,7 +65,7 @@ public abstract class Accounts extends EventComponent {
 			connectionStatus = computeNewConnectionStatus(connectionStatus, status);
 		}
 
-		return new AccountStatus(connectionStatus, new AccountName("All"), new NumConversations(numConversations), new NumUnreadConversations(numUnreadConversations));
+		return new AccountStatus(connectionStatus, new AccountName("All"), new NumConversations(numConversations), new NumUnreadConversations(numUnreadConversations), SingleValue.empty(ConnectionStatusMessage.class));
 	}
 
 	private ConnectionStatus computeNewConnectionStatus(ConnectionStatus connectionStatus, AccountStatus status) {

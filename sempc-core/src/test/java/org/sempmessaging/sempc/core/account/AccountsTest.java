@@ -10,10 +10,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.sempmessaging.sempc.core.account.config.AccountConfiguration;
 import org.sempmessaging.sempc.core.account.config.AccountConfigurationRepository;
-import org.sempmessaging.sempc.core.account.value.AccountName;
-import org.sempmessaging.sempc.core.account.value.ConnectionStatus;
-import org.sempmessaging.sempc.core.account.value.NumConversations;
-import org.sempmessaging.sempc.core.account.value.NumUnreadConversations;
+import org.sempmessaging.sempc.core.account.value.*;
 
 import java.util.Arrays;
 
@@ -92,7 +89,7 @@ public class AccountsTest {
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			assertNotNull(statusList);
 		});
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test"), new NumConversations(5), new NumUnreadConversations(2)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here.")));
 	}
 
 	@Test
@@ -107,7 +104,7 @@ public class AccountsTest {
 		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
 		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
 
-		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test"), new NumConversations(5), new NumUnreadConversations(2));
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here."));
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			AccountStatus changedAccountStatus = null;
 			for(AccountStatus status : statusList) {
@@ -135,9 +132,9 @@ public class AccountsTest {
 		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
 		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
 
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
 
-		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(5), new NumUnreadConversations(2));
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here."));
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			AccountStatus allAccountsStatus = statusList.get(0);
 			assertNotNull(allAccountsStatus);
@@ -161,7 +158,7 @@ public class AccountsTest {
 		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
 		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
 
-		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test"), new NumConversations(5), new NumUnreadConversations(2));
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here."));
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			assertEquals(1, statusList.size());
 			AccountStatus allAccountsStatus = statusList.get(0);
@@ -183,11 +180,11 @@ public class AccountsTest {
 		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
 		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
 
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.UNKNOWN, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.ERROR, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.UNKNOWN, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.ERROR, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
 
-		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here."));
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			AccountStatus allAccountsStatus = statusList.get(0);
 			assumeNotNull(allAccountsStatus);
@@ -210,11 +207,11 @@ public class AccountsTest {
 		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
 		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
 
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.UNKNOWN, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.UNKNOWN, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
 
-		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here."));
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			AccountStatus allAccountsStatus = statusList.get(0);
 			assumeNotNull(allAccountsStatus);
@@ -237,11 +234,11 @@ public class AccountsTest {
 		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
 		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
 
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTING, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
 
-		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here."));
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			AccountStatus allAccountsStatus = statusList.get(0);
 			assumeNotNull(allAccountsStatus);
@@ -264,11 +261,11 @@ public class AccountsTest {
 		ArgumentCaptor<AccountStatusChangedEvent> subscriberCaptor = ArgumentCaptor.forClass(AccountStatusChangedEvent.class);
 		verify(account).subscribe(any(AccountStatusChangedEvent.class), subscriberCaptor.capture());
 
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1)));
-		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1)));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_1"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_2"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
+		subscriberCaptor.getValue().accountStatusChanged(new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_3"), new NumConversations(7), new NumUnreadConversations(1), new ConnectionStatusMessage("message irrelevant here.")));
 
-		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2));
+		AccountStatus accountStatus = new AccountStatus(ConnectionStatus.CONNECTED, new AccountName("test_4"), new NumConversations(5), new NumUnreadConversations(2), new ConnectionStatusMessage("message irrelevant here."));
 		eventTestRule.subscribeMandatory(accounts, accounts.accountsStatusChangedEvent(), (statusList) -> {
 			AccountStatus allAccountsStatus = statusList.get(0);
 			assumeNotNull(allAccountsStatus);

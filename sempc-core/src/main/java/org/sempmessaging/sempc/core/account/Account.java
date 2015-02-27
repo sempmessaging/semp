@@ -28,7 +28,7 @@ public abstract class Account extends EventComponent {
 	}
 
 	private void connectionStatusChanged(ConnectionStatus connectionStatus, ConnectionStatusMessage statusMessage) {
-		send(accountStatusChanged()).accountStatusChanged(new AccountStatus(connectionStatus, configuration.accountName(), SingleValue.empty(NumConversations.class), SingleValue.empty(NumUnreadConversations.class)));
+		send(accountStatusChanged()).accountStatusChanged(new AccountStatus(connectionStatus, configuration.accountName(), SingleValue.empty(NumConversations.class), SingleValue.empty(NumUnreadConversations.class), statusMessage));
 	}
 
 	private void configure(AccountConfiguration configuration) {
