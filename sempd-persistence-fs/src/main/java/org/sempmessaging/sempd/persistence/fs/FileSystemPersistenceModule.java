@@ -1,6 +1,7 @@
 package org.sempmessaging.sempd.persistence.fs;
 
 import net.davidtanzer.jevents.guice.EventComponentModule;
+import org.sempmessaging.datastore.fs.EachFileReader;
 import org.sempmessaging.libsemp.arguments.Args;
 import org.sempmessaging.sempd.persistence.fs.io.EachFileReader;
 

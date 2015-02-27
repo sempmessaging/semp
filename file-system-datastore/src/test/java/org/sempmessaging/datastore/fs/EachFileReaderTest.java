@@ -1,4 +1,4 @@
-package org.sempmessaging.sempd.persistence.fs.io;
+package org.sempmessaging.datastore.fs;
 
 import net.davidtanzer.jevents.EventComponents;
 import testing.EventTestRule;

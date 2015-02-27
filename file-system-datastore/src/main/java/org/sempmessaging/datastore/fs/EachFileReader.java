@@ -1,12 +1,12 @@
-package org.sempmessaging.sempd.persistence.fs.io;
+package org.sempmessaging.datastore.fs;
 
 import com.google.inject.Inject;
+import org.sempmessaging.datastore.fs.lowlevel.DirectoryHandle;
 import net.davidtanzer.jevents.Event;
 import net.davidtanzer.jevents.EventComponent;
 import org.sempmessaging.libsemp.arguments.Args;
-import org.sempmessaging.sempd.persistence.fs.io.lowlevel.Directories;
-import org.sempmessaging.sempd.persistence.fs.io.lowlevel.DirectoryHandle;
-import org.sempmessaging.sempd.persistence.fs.io.lowlevel.FileHandle;
+import org.sempmessaging.datastore.fs.lowlevel.Directories;
+import org.sempmessaging.datastore.fs.lowlevel.FileHandle;
 
 import java.io.IOException;
 import java.io.Reader;

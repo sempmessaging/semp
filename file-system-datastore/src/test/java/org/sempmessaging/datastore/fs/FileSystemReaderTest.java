@@ -1,4 +1,4 @@
-package org.sempmessaging.sempd.persistence.fs.io;
+package org.sempmessaging.datastore.fs;
 
 import com.google.inject.Provider;
 import org.junit.Before;

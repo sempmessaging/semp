@@ -1,4 +1,4 @@
-package org.sempmessaging.sempd.persistence.fs.io.lowlevel;
+package org.sempmessaging.datastore.fs.lowlevel;
 
 import org.sempmessaging.libsemp.arguments.Args;
 
