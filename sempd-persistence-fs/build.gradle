@@ -23,8 +23,11 @@ dependencies {
 	compile project(':semp:values')
 	compile project(':semp:libsemp-core')
 	compile project(':semp:sempd-core')
-    compile project(':semp:file-system-datastore')
+	compile project(':semp:file-system-datastore')
 
 	compile 'com.google.code.gson:gson:2.3'
 	provided 'com.google.inject:guice:3.0'
+
+	testCompile project(':semp:jevents-cg')
+	testCompile project(':semp:jevents-testing')
 }

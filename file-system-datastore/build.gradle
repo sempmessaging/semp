@@ -21,6 +21,10 @@ sourceSets {
 dependencies {
 	compile project(':semp:jevents')
 	compile project(':semp:values')
+    compile project(':semp:libsemp-core')
 
 	provided 'com.google.inject:guice:3.0'
+
+	testCompile project(':semp:jevents-cg')
+	testCompile project(':semp:jevents-testing')
 }

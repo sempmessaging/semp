@@ -3,36 +3,36 @@ package org.sempmessaging.sempd.persistence.fs.serverkeys;
 import com.google.inject.Provider;
 import net.davidtanzer.jevents.EventComponents;
 import net.davidtanzer.jevents.EventResultFuture;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.sempmessaging.datastore.fs.FileSystemAccess;
+import org.sempmessaging.datastore.fs.FileSystemDataStore;
+import org.sempmessaging.datastore.fs.FinishedEvent;
+import org.sempmessaging.datastore.fs.ReadingFileEvent;
+import org.sempmessaging.datastore.fs.operation.ReadEachFileOperation;
+import org.sempmessaging.datastore.fs.operation.ReadEachFileOperationComponent;
 import org.sempmessaging.sempd.core.serverkeys.PublicVerificationKeys;
-import org.sempmessaging.sempd.persistence.fs.io.EachFileReader;
-import org.sempmessaging.sempd.persistence.fs.io.FileSystemReader;
-import org.sempmessaging.sempd.persistence.fs.io.FinishedEvent;
-import org.sempmessaging.sempd.persistence.fs.io.ReadingFileEvent;
 
 import java.io.Reader;
 
 import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 public class FileSystemServerVerificationKeysRepositoryTest {
-	private FileSystemReader fileSystemReader;
+	private FileSystemAccess fileSystemAccess;
 	private FileSystemServerVerificationKeysRepository verificationKeysRepository;
-	private EachFileReader eachFileReader;
 	private VerificationKeysCompiler keysCompiler;
 	private EventResultFuture verificationKeysResultFuture;
 	private Provider<VerificationKeysCompiler> keysCompilerProvider;
+	private FileSystemDataStore dataStore;
+	private ReadEachFileOperation readEachFileOperation;
 
 	@Before
 	public void setup() throws Exception {
-		eachFileReader = spy(EventComponents.createComponent(EachFileReader.class));
-		doAnswer((invocationOnMock) -> null).when(eachFileReader).readEachFile();
-		fileSystemReader = mock(FileSystemReader.class);
-		when(fileSystemReader.eachFileReader(anyString())).thenReturn(eachFileReader);
+		readEachFileOperation = mock(ReadEachFileOperation.class);
 
 		keysCompiler = mock(VerificationKeysCompiler.class);
 		keysCompilerProvider = mock(Provider.class);
@@ -41,18 +41,31 @@ public class FileSystemServerVerificationKeysRepositoryTest {
 		verificationKeysResultFuture = mock(EventResultFuture.class);
 		when(keysCompiler.futureFor(eq(keysCompiler.verificationKeysReadyEvent()), any())).thenReturn(verificationKeysResultFuture);
 
-		verificationKeysRepository = new FileSystemServerVerificationKeysRepository(fileSystemReader, keysCompilerProvider);
+		fileSystemAccess = mock(FileSystemAccess.class);
+		dataStore = mock(FileSystemDataStore.class);
+		when(fileSystemAccess.dataStoreFor(any())).thenReturn(dataStore);
+
+		Provider<ReadEachFileOperation> provider = mock(Provider.class);
+		when(provider.get()).thenReturn(readEachFileOperation);
+		verificationKeysRepository = new FileSystemServerVerificationKeysRepository(fileSystemAccess, keysCompilerProvider, provider);
 	}
 
 	@Test
 	public void allVerificationKeysSetsUpEachFileReaderToSendReadingFileEventToKeysCompiler() {
 		verificationKeysRepository.allVerificationKeys();
 
-		ArgumentCaptor<ReadingFileEvent> handlerCaptor = ArgumentCaptor.forClass(ReadingFileEvent.class);
-		verify(eachFileReader).subscribe(eq(eachFileReader.readingFileEvent()), handlerCaptor.capture());
+		ArgumentCaptor<?> handlerCaptor = ArgumentCaptor.forClass(Object.class);
+		verify(readEachFileOperation, atLeastOnce()).subscribe(any(), handlerCaptor.capture());
+
+		ReadingFileEvent readingFileEvent = null;
+		for(Object o : handlerCaptor.getAllValues()) {
+			if(o instanceof ReadingFileEvent) {
+				readingFileEvent = (ReadingFileEvent) o;
+			}
+		}
 
 		Reader reader = mock(Reader.class);
-		handlerCaptor.getValue().readingFile(reader);
+		readingFileEvent.readingFile(reader);
 		verify(keysCompiler).readKeyFrom(eq(reader));
 	}
 
@@ -61,9 +74,15 @@ public class FileSystemServerVerificationKeysRepositoryTest {
 		verificationKeysRepository.allVerificationKeys();
 
 		ArgumentCaptor<FinishedEvent> handlerCaptor = ArgumentCaptor.forClass(FinishedEvent.class);
-		verify(eachFileReader).subscribe(eq(eachFileReader.finishedReadingEvent()), handlerCaptor.capture());
+		verify(readEachFileOperation, atLeastOnce()).subscribe(any(), handlerCaptor.capture());
 
-		handlerCaptor.getValue().finished();
+		FinishedEvent finishedEvent = null;
+		for(Object o : handlerCaptor.getAllValues()) {
+			if(o instanceof FinishedEvent) {
+				finishedEvent = (FinishedEvent) o;
+			}
+		}
+		finishedEvent.finished();
 		verify(keysCompiler).finishCompilingKeys();
 	}
 
@@ -71,7 +90,7 @@ public class FileSystemServerVerificationKeysRepositoryTest {
 	public void allVerificationKeysStartsEachFileReader() {
 		verificationKeysRepository.allVerificationKeys();
 
-		verify(eachFileReader).readEachFile();
+		verify(dataStore).performFileSystemOperations(readEachFileOperation);
 	}
 
 	@Test

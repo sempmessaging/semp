@@ -2,7 +2,8 @@ package org.sempmessaging.sempd.persistence.fs.serverkeys;
 
 import com.google.inject.Provider;
 import net.davidtanzer.jevents.EventComponents;
-import testing.EventTestRule;
+import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
+import net.davidtanzer.jevents.testing.EventTestRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,7 +32,7 @@ public class VerificationKeysCompilerTest {
 
 	@Before
 	public void setup() throws Exception {
-		verificationKeysCompiler = EventComponents.createComponent(VerificationKeysCompiler.class);
+		verificationKeysCompiler = new EventComponents(new JavassistComponentCodeGenerator()).createComponent(VerificationKeysCompiler.class);
 
 		verificationKeysFactory = mock(VerificationKeysFactory.class);
 		verificationKeysCompiler.setVerificationKeysFactory(verificationKeysFactory);

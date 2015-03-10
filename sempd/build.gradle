@@ -4,4 +4,5 @@ dependencies {
 	compile project(':semp:jevents')
 	compile project(':semp:sempd-core')
 	compile project(':semp:sempd-protocol')
+    compile project(':semp:sempd-persistence-fs')
 }

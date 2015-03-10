@@ -1,9 +1,8 @@
 package org.sempmessaging.sempd.persistence.fs;
 
 import net.davidtanzer.jevents.guice.EventComponentModule;
-import org.sempmessaging.datastore.fs.EachFileReader;
+import org.sempmessaging.datastore.fs.operation.ReadEachFileOperationComponent;
 import org.sempmessaging.libsemp.arguments.Args;
-import org.sempmessaging.sempd.persistence.fs.io.EachFileReader;
 
 public class FileSystemPersistenceModule extends EventComponentModule {
 	private final FileSystemPersistenceConfiguration fileSystemPersistenceConfiguration;
@@ -17,6 +16,6 @@ public class FileSystemPersistenceModule extends EventComponentModule {
 	protected void configure() {
 		bind(FileSystemPersistenceConfiguration.class).toInstance(fileSystemPersistenceConfiguration);
 
-		bindEventComponent(EachFileReader.class);
+		bindEventComponent(ReadEachFileOperationComponent.class);
 	}
 }

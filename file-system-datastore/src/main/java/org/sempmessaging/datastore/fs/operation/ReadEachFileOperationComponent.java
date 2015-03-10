@@ -1,36 +1,36 @@
-package org.sempmessaging.datastore.fs;
+package org.sempmessaging.datastore.fs.operation;
 
 import com.google.inject.Inject;
-import org.sempmessaging.datastore.fs.lowlevel.DirectoryHandle;
 import net.davidtanzer.jevents.Event;
 import net.davidtanzer.jevents.EventComponent;
-import org.sempmessaging.libsemp.arguments.Args;
+import org.sempmessaging.datastore.fs.FileSystemDataStore;
+import org.sempmessaging.datastore.fs.FileSystemOperation;
+import org.sempmessaging.datastore.fs.FinishedEvent;
+import org.sempmessaging.datastore.fs.ReadingFileEvent;
 import org.sempmessaging.datastore.fs.lowlevel.Directories;
+import org.sempmessaging.datastore.fs.lowlevel.DirectoryHandle;
 import org.sempmessaging.datastore.fs.lowlevel.FileHandle;
+import org.sempmessaging.libsemp.arguments.Args;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Path;
 
-public abstract class EachFileReader extends EventComponent {
+public abstract class ReadEachFileOperationComponent extends EventComponent implements ReadEachFileOperation {
 	private Directories directories;
-	private DirectoryHandle directoryToReadFrom;
+	private Path relativePath;
 
-	@Event
-	public abstract ReadingFileEvent readingFileEvent();
-
-	@Event
-	public abstract FinishedEvent finishedReadingEvent();
-
-	public void readEachFile() {
-		assert directoryToReadFrom != null : "Directory to read from must not be null. Did you call \"readFromPath(...)\" before this method?";
+	@Override
+	public void performOperationIn(final FileSystemDataStore.BasePath basePath) {
+		assert directories != null : "Directories must be set by dependency injection or test setup.";
+		DirectoryHandle directory = directories.openDirectory(basePath.path().resolve(relativePath));
 
 		try {
-			directoryToReadFrom.forEachFile(this::readCurrentFile);
+			send(finishedReadingEvent()).finished();
+			directory.forEachFile(this::readCurrentFile);
 		} catch (IOException e) {
 			throw new IllegalStateException("FIXME: Send error event!");
 		}
-		send(finishedReadingEvent()).finished();
 	}
 
 	private void readCurrentFile(final FileHandle fileHandle) {
@@ -49,12 +49,11 @@ public abstract class EachFileReader extends EventComponent {
 		reader.close();
 	}
 
-	public void readFromPath(final Path path) {
-		Args.notNull(path, "path");
-		Args.setOnce(this.directoryToReadFrom, "directoryToReadFrom");
-		assert directories != null : "Directories must be set by dependency injection or test setup.";
+	public void readFromRelativePath(final Path relativePath) {
+		Args.notNull(relativePath, "relativePath");
+		Args.setOnce(this.relativePath, "relativePath");
 
-		directoryToReadFrom = directories.openDirectory(path);
+		this.relativePath = relativePath;
 	}
 
 	@Inject
