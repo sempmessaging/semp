@@ -13,4 +13,14 @@ public class Directories {
 		}
 		return new DirectoryHandle(path);
 	}
+
+	public FileHandle openFile(final Path path) {
+		if(!Files.exists(path)) {
+			throw new PathDoesNotExistException(path);
+		}
+		if(!Files.isRegularFile(path)) {
+			throw new PathIsNotAFileException(path);
+		}
+		return new FileHandle(path);
+	}
 }

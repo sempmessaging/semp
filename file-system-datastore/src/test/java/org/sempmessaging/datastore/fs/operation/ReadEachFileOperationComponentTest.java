@@ -4,6 +4,7 @@ import net.davidtanzer.jevents.EventComponents;
 import net.davidtanzer.jevents.cg.JavassistComponentCodeGenerator;
 import net.davidtanzer.jevents.testing.EventTestRule;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.sempmessaging.datastore.fs.FileSystemDataStore;
@@ -17,11 +18,12 @@ import java.io.Reader;
 import java.nio.file.Path;
 
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
-public class ReadEachFileOperationTest {
+public class ReadEachFileOperationComponentTest {
 	@Rule
 	public EventTestRule eventTestRule = new EventTestRule();
 
@@ -100,9 +102,15 @@ public class ReadEachFileOperationTest {
 		verify(expectedReader).close();
 	}
 
+	@Test @Ignore
+	public void sendsErrorWhenDirectoryCouldNotBeOpened() {
+		fail("Implement me!");
+	}
+
 	private FileSystemDataStore.BasePath basePath() {
 		FileSystemDataStore.BasePath basePath = mock(FileSystemDataStore.BasePath.class);
 		Path path = mock(Path.class);
+		when(path.resolve(any(Path.class))).thenReturn(path);
 		when(basePath.path()).thenReturn(path);
 		return basePath;
 	}

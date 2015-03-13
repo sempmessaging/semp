@@ -1,12 +1,8 @@
 package org.sempmessaging.datastore.fs.operation;
 
 import com.google.inject.Inject;
-import net.davidtanzer.jevents.Event;
 import net.davidtanzer.jevents.EventComponent;
 import org.sempmessaging.datastore.fs.FileSystemDataStore;
-import org.sempmessaging.datastore.fs.FileSystemOperation;
-import org.sempmessaging.datastore.fs.FinishedEvent;
-import org.sempmessaging.datastore.fs.ReadingFileEvent;
 import org.sempmessaging.datastore.fs.lowlevel.Directories;
 import org.sempmessaging.datastore.fs.lowlevel.DirectoryHandle;
 import org.sempmessaging.datastore.fs.lowlevel.FileHandle;
@@ -23,11 +19,15 @@ public abstract class ReadEachFileOperationComponent extends EventComponent impl
 	@Override
 	public void performOperationIn(final FileSystemDataStore.BasePath basePath) {
 		assert directories != null : "Directories must be set by dependency injection or test setup.";
-		DirectoryHandle directory = directories.openDirectory(basePath.path().resolve(relativePath));
+		Path absolutePath = basePath.path().resolve(relativePath);
+		assert absolutePath != null : "Path does (probably) never return null when resolving paths...";
+
+		DirectoryHandle directory = directories.openDirectory(absolutePath);
+		//FIXME handle exceptions!
 
 		try {
-			send(finishedReadingEvent()).finished();
 			directory.forEachFile(this::readCurrentFile);
+			send(finishedReadingEvent()).finished();
 		} catch (IOException e) {
 			throw new IllegalStateException("FIXME: Send error event!");
 		}
